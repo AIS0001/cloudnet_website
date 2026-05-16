@@ -1,0 +1,27 @@
+# CloudNet Softwares Robots.txt
+# Allow all search engines to crawl the site
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /*.json$
+
+# Google Search Console
+User-agent: Googlebot
+Allow: /
+
+# Bing Search Engine
+User-agent: Bingbot
+Allow: /
+
+# Yahoo Search Engine
+User-agent: Slurp
+Allow: /
+
+# Crawl delay in seconds
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://www.cloudnetsoftwares.com/sitemap-index.xml
+Sitemap: https://www.cloudnetsoftwares.com/sitemap.xml
+Sitemap: https://cloudnetsoftwares.com/sitemap.xml
