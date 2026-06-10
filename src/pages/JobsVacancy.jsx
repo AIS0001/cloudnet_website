@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import { Briefcase, MapPin, Users, Smartphone, TrendingUp, Banknote } from 'lucide-react'
+import { Briefcase, MapPin, Users, Smartphone, TrendingUp, Banknote, PhoneCall } from 'lucide-react'
 
 const JobsVacancy = () => {
   const openings = [
@@ -25,6 +25,29 @@ const JobsVacancy = () => {
         'Comfortable with field visits and client meetings',
         'Basic understanding of software/POS solutions is a plus',
         'Motivated, target-driven, and customer-focused approach'
+      ]
+    },
+    {
+      title: 'Calling / Reception Staff',
+      location: 'Bangkok / Pattaya (On-site)',
+      type: 'Full-time',
+      salary: '฿ Salary as per experience',
+      icon: <PhoneCall size={26} />,
+      summary:
+        'Handle inbound and outbound calls, follow up with leads provided by the company, and manage customer service calls professionally.',
+      responsibilities: [
+        'Take follow-up calls with leads and customers provided by the company',
+        'Manage incoming calls and respond to customer service queries',
+        'Maintain accurate records of calls, leads, and follow-up status',
+        'Coordinate with sales and support teams on customer requirements',
+        'Provide a polite and professional first point of contact for the company'
+      ],
+      requirements: [
+        'Good communication skills in English and Thai',
+        'Prior experience in telecalling, reception, or customer support is a plus',
+        'Comfortable handling a high volume of calls daily',
+        'Well-organized with good follow-up and record-keeping habits',
+        'Friendly, patient, and customer-focused attitude'
       ]
     },
     {

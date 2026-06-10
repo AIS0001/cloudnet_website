@@ -70,8 +70,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-gray-400">
           <p>&copy; {currentYear} CloudNet Softwares. All rights reserved.</p>
+          <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
         </div>
       </div>
     </footer>

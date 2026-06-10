@@ -7,7 +7,7 @@ const HERO_SLIDES = [
     subtitle: 'Fast, Secure, and Scalable Infrastructure',
     description: 'Cloudnet delivers high-performance VPS hosting with strong uptime, security, and flexible resources for growing businesses.',
     gradient: 'from-sky-700 to-cyan-500',
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
   },
   {
     title: 'Restaurant POS System',
@@ -29,6 +29,13 @@ const HERO_SLIDES = [
     description: 'Streamline venue operations with software for ticket sales, access control, and performance analytics.',
     gradient: 'from-fuchsia-700 to-rose-500',
     image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+  },
+  {
+    title: 'Mobile App Development',
+    subtitle: 'Tour & Travel, CRM, and More',
+    description: 'We design and develop powerful mobile apps including Tour & Travel booking apps, CRM apps, on-demand service apps, and custom business apps for Android and iOS.',
+    gradient: 'from-violet-700 to-purple-500',
+    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
   },
   {
     title: 'Custom Software Solutions',

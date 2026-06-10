@@ -9,6 +9,7 @@ import Portfolio from './pages/Portfolio'
 import Contact from './pages/Contact'
 import Products from './pages/Products'
 import RestaurantPOS from './pages/RestaurantPOS'
+import NightPulse from './pages/NightPulse'
 import ERPSolution from './pages/ERPSolution'
 import ThermalPaper from './pages/ThermalPaper'
 import PrinterCatalog from './pages/PrinterCatalog'
@@ -16,6 +17,7 @@ import POSMachine from './pages/POSMachine'
 import KioskMachine from './pages/KioskMachine'
 import JobsVacancy from './pages/JobsVacancy'
 import FreelancerResellerProgram from './pages/FreelancerResellerProgram'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 
 function App() {
   return (
@@ -33,12 +35,14 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/restaurant-pos" element={<RestaurantPOS />} />
+              <Route path="/products/nightpulse" element={<NightPulse />} />
               <Route path="/products/erp-solution" element={<ERPSolution />} />
               <Route path="/products/thermal-paper" element={<ThermalPaper />} />
               <Route path="/products/printer" element={<PrinterCatalog />} />
               <Route path="/products/pos-machine" element={<POSMachine />} />
               <Route path="/products/kiosk-machine" element={<KioskMachine />} />
               <Route path="/freelancer-reseller-program" element={<FreelancerResellerProgram />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             </Routes>
           </main>
           <Footer />

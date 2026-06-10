@@ -39,7 +39,28 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  
+
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/jobs-vacancy</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/freelancer-reseller-program</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/privacy-policy</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
   <!-- Products Pages -->
   <url>
     <loc>https://www.cloudnetsoftwares.com/products</loc>
@@ -47,7 +68,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-  
+
   <!-- ChefMate POS Product Page -->
   <url>
     <loc>https://www.cloudnetsoftwares.com/products/restaurant-pos</loc>
@@ -55,7 +76,15 @@
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
-  
+
+  <!-- NightPulse POS Product Page -->
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/products/nightpulse</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- CloudNet ERP Product Page -->
   <url>
     <loc>https://www.cloudnetsoftwares.com/products/erp-solution</loc>
@@ -63,5 +92,37 @@
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
-  
+
+  <!-- Thermal Paper Product Page -->
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/products/thermal-paper</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Printer Product Page -->
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/products/printer</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- POS Machine Product Page -->
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/products/pos-machine</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Kiosk Machine Product Page -->
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/products/kiosk-machine</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
 </urlset>

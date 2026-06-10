@@ -27,6 +27,7 @@ const Navbar = () => {
 
   const productSubmenu = [
     { path: '/products/restaurant-pos', label: 'Restaurant POS' },
+    { path: '/products/nightpulse', label: 'NightPulse' },
     { path: '/products/erp-solution', label: 'ERP Solution' },
     { path: '/products/thermal-paper', label: 'Thermal Paper' },
     { path: '/products/printer', label: 'Printer' },
