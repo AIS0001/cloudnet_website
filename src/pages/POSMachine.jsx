@@ -1,7 +1,17 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, CheckCircle, Zap, Package, Phone, Monitor, Cpu, Wifi, Smartphone, Coffee, MapPin, ChevronDown, Download, Info, Cog } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CheckCircle, Zap, Package, Phone, Monitor, Cpu, Wifi, Smartphone, Coffee, MapPin, ChevronDown, Download, Info, Cog, LineChart, BrainCircuit, ShieldAlert, MessagesSquare } from 'lucide-react'
 import ShareSection from '../components/ShareSection'
+import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
+import ProductJourney from '../components/cloudnet/ProductJourney'
+import AIEngineConnect from '../components/cloudnet/AIEngineConnect'
+
+const AI_BENEFITS = [
+  { icon: LineChart, title: 'Predictive Sales Forecasting', desc: 'Anticipate busy periods and plan staffing and stock accordingly.' },
+  { icon: BrainCircuit, title: 'Smart Automation', desc: 'Routine reordering and reporting handled for you.' },
+  { icon: ShieldAlert, title: 'Anomaly Detection', desc: 'Flags unusual discounts, voids, or transaction patterns.' },
+  { icon: MessagesSquare, title: 'AI Chat Insights', desc: 'Ask questions about your sales data, get instant plain-language answers.' }
+]
 import p1dpImg1 from '../assets/img/POS Machine/P1DP/P1DP.jpg'
 import p1dpImg2 from '../assets/img/POS Machine/P1DP/P1DP (2).jpg'
 import p1dpImg3 from '../assets/img/POS Machine/P1DP/P1DP (3).jpg'
@@ -529,6 +539,13 @@ const POSMachine = () => {
         </div>
       </section>
 
+      {/* Product Journey Strip */}
+      <section className="py-8 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <ProductJourney stages={['Business', 'POS', 'Sales', 'Data', 'Analytics', 'Growth']} />
+        </div>
+      </section>
+
       {/* Catalog */}
       <section className="pb-16 bg-white">
         <div className="container mx-auto px-4">
@@ -751,6 +768,14 @@ const POSMachine = () => {
 
       {/* Share Section */}
       <ShareSection productName="POS Machine" />
+
+      {/* CloudNet AI Engine Integration Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <CloudNetworkBackground density="low" />
+        <div className="container mx-auto px-4 relative">
+          <AIEngineConnect product="CloudNet POS" benefits={AI_BENEFITS} />
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-br from-orange-50 to-white">

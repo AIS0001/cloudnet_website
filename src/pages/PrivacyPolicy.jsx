@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
         <title>Privacy Policy - CloudNet Softwares</title>
         <meta
           name="description"
-          content="Read CloudNet Softwares' privacy policy to understand how we collect, use, and protect your personal information."
+          content="Read CloudNet Softwares' privacy policy - it covers our website and every CloudNet software product and app, including Clario AI, NightPulse, ChefMate POS, CloudNet ERP, and CloudScreen."
         />
         <link rel="canonical" href="https://www.cloudnetsoftwares.com/privacy-policy" />
         <meta property="og:title" content="Privacy Policy - CloudNet Softwares" />
@@ -32,7 +32,7 @@ const PrivacyPolicy = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="prose prose-lg max-w-none text-gray-700 space-y-8">
-            <p className="text-sm text-gray-500">Last updated: June 10, 2026</p>
+            <p className="text-sm text-gray-500">Last updated: August 23, 2026</p>
 
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-3">1. Introduction</h2>
@@ -43,8 +43,29 @@ const PrivacyPolicy = () => {
               </p>
             </div>
 
+            <div className="bg-orange-50 border-2 border-orange-100 rounded-xl p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">2. This Policy Covers All CloudNet Software & Apps</h2>
+              <p className="leading-relaxed mb-4">
+                This is a single, unified Privacy Policy that applies to the CloudNet Softwares website and to
+                every CloudNet software product and mobile app, including:
+              </p>
+              <ul className="list-disc pl-6 space-y-1.5">
+                <li><strong>Clario AI</strong> - our AI business assistant app. Clario processes the text or voice questions you ask it (including microphone audio, when you use voice input) and your business data in order to answer your questions and run the automations you set up. On-device voices process speech locally; cloud voices (e.g. Nova, ElevenLabs) send audio to our AI service providers to generate a response. AI credit usage is tracked per account and is not shared between users.</li>
+                <li><strong>NightPulse</strong> - POS app for cafes, restaurants, bars, clubs, and karaoke venues.</li>
+                <li><strong>ChefMate / Restaurant POS</strong> - POS app for restaurants.</li>
+                <li><strong>CloudNet ERP</strong> - business management platform.</li>
+                <li><strong>CloudScreen</strong> - digital advertising and screen management platform.</li>
+                <li><strong>Access Gate System</strong> - cloud access control platform (face recognition, RFID, and QR entry logs).</li>
+                <li>Manager and POS companion apps, and other CloudNet software products released from time to time.</li>
+              </ul>
+              <p className="leading-relaxed mt-4">
+                Wherever this policy refers to "our products" or "our software", it means all of the above, in
+                addition to this website.
+              </p>
+            </div>
+
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">2. Information We Collect</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">3. Information We Collect</h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Personal details such as name, email address, phone number, and company information when you contact us or request a demo.</li>
                 <li>Business information you provide while using our software products (e.g., POS, ERP, NightPulse).</li>
@@ -54,7 +75,7 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">3. How We Use Your Information</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">4. How We Use Your Information</h2>
               <ul className="list-disc pl-6 space-y-2">
                 <li>To provide, operate, and maintain our products and services.</li>
                 <li>To respond to inquiries, schedule demos, and provide customer support.</li>
@@ -65,7 +86,7 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">4. Sharing of Information</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">5. Sharing of Information</h2>
               <p className="leading-relaxed">
                 We do not sell your personal information. We may share information with trusted third-party
                 service providers who help us operate our business (such as hosting, payment processing, and
@@ -74,7 +95,7 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">5. Data Security</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">6. Data Security</h2>
               <p className="leading-relaxed">
                 We implement reasonable technical and organizational measures to protect your information from
                 unauthorized access, alteration, disclosure, or destruction. However, no method of transmission
@@ -83,7 +104,7 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">6. Cookies</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">7. Cookies</h2>
               <p className="leading-relaxed">
                 Our website may use cookies and similar tracking technologies to enhance your browsing experience,
                 analyze site traffic, and understand where our visitors are coming from. You can choose to disable
@@ -92,7 +113,7 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">7. Your Rights</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">8. Your Rights</h2>
               <p className="leading-relaxed">
                 You may request access to, correction of, or deletion of your personal information by contacting
                 us using the details below. We will respond to your request in accordance with applicable data
@@ -101,7 +122,7 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">8. Changes to This Policy</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">9. Changes to This Policy</h2>
               <p className="leading-relaxed">
                 We may update this Privacy Policy from time to time to reflect changes in our practices or for
                 legal, operational, or regulatory reasons. The updated version will be posted on this page with
@@ -110,7 +131,7 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">9. Contact Us</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">10. Contact Us</h2>
               <p className="leading-relaxed">
                 If you have any questions about this Privacy Policy or how we handle your information, please contact us:
               </p>

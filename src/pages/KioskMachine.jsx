@@ -1,7 +1,17 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, CheckCircle, Zap, Phone, Monitor, Package, Download, Info, Cog } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CheckCircle, Zap, Phone, Monitor, Package, Download, Info, Cog, LineChart, BrainCircuit, ShieldAlert, MessagesSquare } from 'lucide-react'
 import ShareSection from '../components/ShareSection'
+import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
+import ProductJourney from '../components/cloudnet/ProductJourney'
+import AIEngineConnect from '../components/cloudnet/AIEngineConnect'
+
+const AI_BENEFITS = [
+  { icon: LineChart, title: 'Predictive Order Trends', desc: 'Spot peak self-order times and best-selling items automatically.' },
+  { icon: BrainCircuit, title: 'Smart Menu Recommendations', desc: 'AI suggests upsells and combos based on real order patterns.' },
+  { icon: ShieldAlert, title: 'Anomaly Detection', desc: 'Flags unusual order or refund patterns across kiosks.' },
+  { icon: MessagesSquare, title: 'AI Chat Insights', desc: 'Ask questions about kiosk sales data, get instant plain-language answers.' }
+]
 import kioskImg1 from '../assets/img/kiosk/kiosk1.avif'
 import kioskImg2 from '../assets/img/kiosk/kiosk2.avif'
 import appMobilePos from '../assets/img/Applications/Mobile POS and tablet ordering.jpg'
@@ -227,6 +237,13 @@ const KioskMachine = () => {
         </div>
       </section>
 
+      {/* Product Journey Strip */}
+      <section className="py-8 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <ProductJourney stages={['Customer', 'Self-Order Kiosk', 'Kitchen/Queue', 'Sales', 'Data', 'AI Insights']} />
+        </div>
+      </section>
+
       <section className="pb-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-4 gap-8">
@@ -442,6 +459,14 @@ const KioskMachine = () => {
       </section>
 
       <ShareSection productName="Kiosk Machine" />
+
+      {/* CloudNet AI Engine Integration Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <CloudNetworkBackground density="low" />
+        <div className="container mx-auto px-4 relative">
+          <AIEngineConnect product="Kiosk Machine" benefits={AI_BENEFITS} />
+        </div>
+      </section>
 
       <section className="py-16 bg-gradient-to-br from-orange-50 to-white">
         <div className="container mx-auto px-4 text-center">

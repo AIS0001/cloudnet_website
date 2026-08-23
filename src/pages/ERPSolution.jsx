@@ -1,8 +1,18 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Database, TrendingUp, BarChart3, Users, Zap, Lock, Cloud, CheckCircle2, ArrowRight, ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, Package, FileText, X, Building2, DollarSign, Truck, Settings } from 'lucide-react'
+import { Database, TrendingUp, BarChart3, Users, Zap, Lock, Cloud, CheckCircle2, ArrowRight, ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, Package, FileText, X, Building2, DollarSign, Truck, Settings, LineChart, BrainCircuit, ShieldAlert, MessagesSquare } from 'lucide-react'
 import cloudnetQR from '../assets/img/cloudnetid.jpeg'
+import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
+import ProductJourney from '../components/cloudnet/ProductJourney'
+import AIEngineConnect from '../components/cloudnet/AIEngineConnect'
+
+const AI_BENEFITS = [
+  { icon: LineChart, title: 'Predictive Forecasting', desc: 'Anticipate demand, cash flow, and stock needs before they happen.' },
+  { icon: BrainCircuit, title: 'Smart Procurement', desc: 'AI recommends purchase orders and reorder points automatically.' },
+  { icon: ShieldAlert, title: 'Anomaly Detection', desc: 'Flags unusual transactions, spend, or inventory variance across your business.' },
+  { icon: MessagesSquare, title: 'AI Chat Insights', desc: 'Ask questions about your financials and reports, get instant plain-language answers.' }
+]
 
 const ERPSolution = () => {
   const [activeTab, setActiveTab] = useState('overview')
@@ -579,6 +589,13 @@ const ERPSolution = () => {
         </div>
       </section>
 
+      {/* Product Journey Strip */}
+      <section className="py-8 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <ProductJourney stages={['Business', 'ERP', 'Operations', 'Business Data', 'Cloud Intelligence', 'Growth']} />
+        </div>
+      </section>
+
       {/* Tab Navigation Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -748,6 +765,14 @@ const ERPSolution = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CloudNet AI Engine Integration Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <CloudNetworkBackground density="low" />
+        <div className="container mx-auto px-4 relative">
+          <AIEngineConnect product="CloudNet ERP" benefits={AI_BENEFITS} />
         </div>
       </section>
 

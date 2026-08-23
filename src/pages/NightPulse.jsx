@@ -1,10 +1,68 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, CheckCircle2, Zap, ArrowRight, Lock, Globe, TrendingUp, X, BarChart3, Crown, Building2, Music2, Smartphone, Sparkles, BrainCircuit, LineChart, ShieldAlert, MessagesSquare, PlayCircle } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, CheckCircle2, Zap, ArrowRight, Lock, Globe, TrendingUp, X, BarChart3, Crown, Building2, Music2, Smartphone, BrainCircuit, LineChart, ShieldAlert, MessagesSquare, PlayCircle, Clock, Printer, User, Bell, Lightbulb, Flame, Sparkles } from 'lucide-react'
 import cloudnetQR from '../assets/img/cloudnetid.jpeg'
 import planImage from '../assets/download/plan.jpg'
-import aiEngineBadge from '../assets/img/cloudnet-ai-engine-badge.png'
+import ScrollReveal from '../components/animations/ScrollReveal'
+import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
+import ProductJourney from '../components/cloudnet/ProductJourney'
+import AIEngineConnect from '../components/cloudnet/AIEngineConnect'
+import PhoneMockup from '../components/cloudnet/PhoneMockup'
+import screenItemWise from '../assets/img/nightpulse-app/screen-1.webp'
+import screenDayWise from '../assets/img/nightpulse-app/screen-2.webp'
+import screenPOS from '../assets/img/nightpulse-app/screen-3.webp'
+import screenSelectTable from '../assets/img/nightpulse-app/screen-4.webp'
+import screenBillHistory from '../assets/img/nightpulse-app/screen-5.webp'
+import screenCheckBill from '../assets/img/nightpulse-app/screen-6.webp'
+
+const APP_SCREENS = [
+  {
+    src: screenItemWise,
+    title: 'Item Wise Summary',
+    desc: 'See exactly what sold - quantity, discounts, and total per item - searchable and filterable by date.'
+  },
+  {
+    src: screenDayWise,
+    title: 'Day Wise Reports',
+    desc: 'Daily sales broken down by cash, card, QR, and entertainment, with day-close status at a glance.'
+  },
+  {
+    src: screenPOS,
+    title: 'Fast Point of Sale',
+    desc: 'Category-based ordering for food and drinks, with photos for every item and instant table/bill switching.'
+  },
+  {
+    src: screenSelectTable,
+    title: 'Table & Room Status',
+    desc: 'A visual table map showing which tables and VIP rooms are free or busy, updated in real time.'
+  },
+  {
+    src: screenBillHistory,
+    title: 'Bill History',
+    desc: 'Search and filter every past bill by date, table, or status - active or cancelled - in seconds.'
+  },
+  {
+    src: screenCheckBill,
+    title: 'Check Bill & Checkout',
+    desc: 'Review items, apply discounts, calculate change, and save the bill - all from one screen.'
+  }
+]
+
+const AI_BENEFITS = [
+  { icon: LineChart, title: 'Predictive Sales Forecasting', desc: 'Anticipate busy nights and staff, stock, and rooms accordingly.' },
+  { icon: BrainCircuit, title: 'Smart Inventory Reordering', desc: 'AI recommends restock levels for drinks and bar items automatically.' },
+  { icon: ShieldAlert, title: 'Anomaly & Commission Checks', desc: 'Flags unusual discounts, voids, or Kayotee commission patterns.' },
+  { icon: MessagesSquare, title: 'AI Chat Insights', desc: 'Ask questions about your reports and get instant, plain-language answers.' }
+]
+
+const COAL_CHANGE_FEATURES = [
+  { icon: Clock, title: 'Customizable Timing', desc: 'Set coal change interval every 20-30 minutes or as per your preference.' },
+  { icon: Printer, title: 'Auto Trigger & Print', desc: 'System auto-triggers and prints a reminder KOT without any manual action.' },
+  { icon: User, title: 'No Manual Effort', desc: 'No need for staff to manually trigger - system takes care of it automatically.' },
+  { icon: Bell, title: 'Better Service Experience', desc: 'Timely coal changes ensure a better shisha experience for your customers.' }
+]
 
 const nightclubImage = 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1600&h=1200&q=80'
 const barCounterImage = 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&h=900&q=80'
@@ -507,6 +565,13 @@ const NightPulse = () => {
         </div>
       </section>
 
+      {/* Product Journey Strip */}
+      <section className="py-8 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <ProductJourney stages={['Billing', 'Tables & Rooms', 'Events', 'Sales', 'Customer Data', 'AI Insights']} />
+        </div>
+      </section>
+
       {/* Photo Gallery Strip */}
       <section className="py-14 bg-white">
         <div className="container mx-auto px-4">
@@ -540,68 +605,103 @@ const NightPulse = () => {
         </div>
       </section>
 
-      {/* CloudNet AI Engine Integration Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+      {/* App Screens */}
+      <section className="py-20 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <ScrollReveal className="text-center mb-14 max-w-2xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              See NightPulse POS <span className="text-primary">In Action</span>
+            </h2>
+            <p className="text-slate-400 text-lg">
+              Real screens from the NightPulse app - billing, reports, tables, and more, all built for speed
+              on a busy floor.
+            </p>
+          </ScrollReveal>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-10 max-w-5xl mx-auto">
+            {APP_SCREENS.map((screen, i) => (
+              <ScrollReveal key={screen.title} delay={(i % 3) * 0.1}>
+                <PhoneMockup src={screen.src} alt={`NightPulse POS - ${screen.title}`} className="mb-5" />
+                <h3 className="text-white font-bold text-center mb-1.5">{screen.title}</h3>
+                <p className="text-slate-400 text-sm text-center leading-relaxed">{screen.desc}</p>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* New Feature: Shisha Timing - Auto Coal Change KOT */}
+      <section className="relative py-20 bg-gradient-to-br from-orange-50 via-white to-orange-50 overflow-hidden">
+        <div className="absolute -top-20 -right-20 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl pointer-events-none" />
         <div className="container mx-auto px-4 relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div>
-              <img
-                src={aiEngineBadge}
-                alt="CloudNet AI Engine"
-                className="w-56 md:w-72 mx-auto lg:mx-0 drop-shadow-2xl"
-              />
-            </div>
-            <div className="text-center lg:text-left">
-              <span className="inline-flex items-center gap-2 bg-primary text-white text-sm font-bold uppercase tracking-wide px-4 py-1.5 rounded-full mb-5">
-                <Sparkles size={16} />
-                Coming Soon
+          <div className="grid lg:grid-cols-2 gap-14 items-center max-w-6xl mx-auto">
+            <ScrollReveal direction="left" className="order-2 lg:order-1">
+              <span className="inline-flex items-center gap-2 bg-slate-900 text-white text-xs font-bold uppercase tracking-wide px-4 py-1.5 rounded-full mb-5">
+                <Sparkles size={14} className="text-primary" />
+                New Feature at NightPulse POS
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                NightPulse Connects with <span className="text-primary">CloudNet AI Engine</span>
+              <h2 className="text-3xl md:text-5xl font-bold mb-3">
+                Shisha Timing <span className="text-primary">Auto Coal Change KOT</span>
               </h2>
-              <p className="text-gray-300 text-lg leading-relaxed mb-8">
-                CloudNet AI Engine is our unified intelligence layer built to connect with any CloudNet product,
-                including NightPulse. Once live, it plugs directly into your venue's data - sales, inventory,
-                rooms, and Kayotee performance - to give you smarter, faster, and more automated decision-making,
-                without changing how you already use NightPulse.
+              <p className="text-gray-600 text-lg leading-relaxed mb-8">
+                Never miss a coal change again! NightPulse POS now automatically triggers and prints a
+                reminder KOT to change coal.
               </p>
-              <div className="grid sm:grid-cols-2 gap-5 text-left mb-8">
-                <div className="flex items-start gap-3">
-                  <LineChart className="text-primary flex-shrink-0 mt-1" size={22} />
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">Predictive Sales Forecasting</h4>
-                    <p className="text-gray-400 text-sm">Anticipate busy nights and staff, stock, and rooms accordingly.</p>
+              <div className="grid sm:grid-cols-2 gap-5">
+                {COAL_CHANGE_FEATURES.map((feature, i) => {
+                  const Icon = feature.icon
+                  return (
+                    <motion.div
+                      key={feature.title}
+                      className="flex items-start gap-3"
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 0.4, delay: i * 0.1 }}
+                    >
+                      <span className="w-10 h-10 rounded-lg bg-slate-900 text-primary flex items-center justify-center flex-shrink-0">
+                        <Icon size={18} />
+                      </span>
+                      <div>
+                        <h4 className="font-bold text-gray-900 text-sm mb-1">{feature.title}</h4>
+                        <p className="text-gray-600 text-sm leading-snug">{feature.desc}</p>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </ScrollReveal>
+            <ScrollReveal direction="right" className="order-1 lg:order-2 flex justify-center">
+              <div className="relative w-full max-w-sm">
+                <motion.div
+                  className="absolute inset-0 bg-primary/20 rounded-full blur-3xl"
+                  animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                <div className="relative bg-white border-2 border-orange-100 rounded-2xl shadow-2xl p-8 text-center">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-orange-600 flex items-center justify-center mx-auto mb-5">
+                    <Flame className="text-white" size={30} />
                   </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <BrainCircuit className="text-primary flex-shrink-0 mt-1" size={22} />
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">Smart Inventory Reordering</h4>
-                    <p className="text-gray-400 text-sm">AI recommends restock levels for drinks and bar items automatically.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <ShieldAlert className="text-primary flex-shrink-0 mt-1" size={22} />
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">Anomaly & Commission Checks</h4>
-                    <p className="text-gray-400 text-sm">Flags unusual discounts, voids, or Kayotee commission patterns.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <MessagesSquare className="text-primary flex-shrink-0 mt-1" size={22} />
-                  <div>
-                    <h4 className="text-white font-semibold mb-1">AI Chat Insights</h4>
-                    <p className="text-gray-400 text-sm">Ask questions about your reports and get instant, plain-language answers.</p>
+                  <p className="text-2xl font-bold text-gray-900 mb-1">Coal Change</p>
+                  <p className="text-primary font-semibold mb-6">Every 20-30 min</p>
+                  <div className="flex items-start gap-3 bg-orange-50 border border-dashed border-primary/40 rounded-lg p-4 text-left">
+                    <Lightbulb className="text-primary flex-shrink-0 mt-0.5" size={20} />
+                    <div>
+                      <p className="font-semibold text-gray-900 text-sm">Smart Automation for Smarter Operations</p>
+                      <p className="text-gray-600 text-xs mt-1">Let NightPulse POS handle the reminders, so you can focus on delivering great experiences.</p>
+                    </div>
                   </div>
                 </div>
               </div>
-              <p className="text-gray-400 text-sm">
-                Because CloudNet AI Engine is built as a shared layer across our product line, every business using
-                NightPulse, Restaurant POS, ERP Solution, or Access Gate System will be able to turn it on for their
-                venue as soon as it launches.
-              </p>
-            </div>
+            </ScrollReveal>
           </div>
+        </div>
+      </section>
+
+      {/* CloudNet AI Engine Integration Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <CloudNetworkBackground density="low" />
+        <div className="container mx-auto px-4 relative">
+          <AIEngineConnect product="NightPulse" benefits={AI_BENEFITS} />
         </div>
       </section>
 

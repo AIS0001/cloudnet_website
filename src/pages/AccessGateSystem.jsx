@@ -1,6 +1,9 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import ShareSection from '../components/ShareSection'
+import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
+import ProductJourney from '../components/cloudnet/ProductJourney'
+import AIEngineConnect from '../components/cloudnet/AIEngineConnect'
 import {
   ScanFace,
   CreditCard,
@@ -16,8 +19,19 @@ import {
   FileText,
   ArrowRight,
   CheckCircle2,
-  Wifi
+  Wifi,
+  LineChart,
+  BrainCircuit,
+  ShieldAlert,
+  MessagesSquare
 } from 'lucide-react'
+
+const AI_BENEFITS = [
+  { icon: LineChart, title: 'Predictive Traffic Patterns', desc: 'Anticipate peak entry/exit times and staff gates accordingly.' },
+  { icon: BrainCircuit, title: 'Smart Access Automation', desc: 'AI-assisted scheduling and access rules across every gate.' },
+  { icon: ShieldAlert, title: 'Anomaly Detection', desc: 'Flags unusual access attempts or activity patterns in real time.' },
+  { icon: MessagesSquare, title: 'AI Chat Insights', desc: 'Ask questions about access logs, get instant plain-language answers.' }
+]
 
 const AccessGateSystem = () => {
   const solutions = [
@@ -191,6 +205,13 @@ const AccessGateSystem = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Product Journey Strip */}
+      <section className="py-8 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <ProductJourney stages={['Entry Attempt', 'Face/RFID/QR Check', 'Gate Access', 'Access Log', 'Data', 'AI Insights']} />
         </div>
       </section>
 
@@ -384,6 +405,14 @@ const AccessGateSystem = () => {
 
       {/* Share Section */}
       <ShareSection productName="Access Gate System" />
+
+      {/* CloudNet AI Engine Integration Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <CloudNetworkBackground density="low" />
+        <div className="container mx-auto px-4 relative">
+          <AIEngineConnect product="Access Gate System" benefits={AI_BENEFITS} />
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary to-orange-500">

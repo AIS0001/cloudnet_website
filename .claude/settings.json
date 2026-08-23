@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"cloudeye: %{http_code}\\\\n\" \"http://localhost:3000/products/cloudeye\")",
+      "Bash(grep -n \"<section\\\\|{/\\\\*\" \"d:/Projects/cloudnet_website/src/pages/NightPulse.jsx\")",
+      "Bash(ffmpeg -i \"D:/Projects/cloud_eye/flutter_App/assets/VIDEOS/CLARIA VIDEO.mp4\")",
+      "Bash(ffmpeg -y -ss 3 -i \"D:/Projects/cloud_eye/flutter_App/assets/VIDEOS/CLARIA VIDEO.mp4\" -frames:v 1 \"C:\\\\Users\\\\LOQ\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Projects-cloudnet-website\\\\652e7b5d-1c9c-4946-b06c-9ec62c9c272e\\\\scratchpad\\\\clario_video_frame.jpg\")",
+      "Bash(ffmpeg -y -i \"D:/Projects/cloud_eye/flutter_App/assets/VIDEOS/CLARIA VIDEO.mp4\" -an -vf \"scale=960:-2\" -c:v libx264 -crf 26 -preset slow -movflags +faststart \"d:/Projects/cloudnet_website/public/videos/clario-ai-reveal.mp4\")",
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"video: %{http_code}\\\\n\" \"http://localhost:3001/videos/clario-ai-reveal.mp4\")",
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"nightpulse: %{http_code}\\\\n\" \"http://localhost:3001/products/nightpulse\")",
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"about: %{http_code}\\\\n\" \"http://localhost:3000/about\")"
+    ]
+  }
+}

@@ -1,9 +1,19 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, CheckCircle2, Zap, ArrowRight, Lock, Globe, TrendingUp, X, BarChart3, Crown, Building2 } from 'lucide-react'
+import { ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, CheckCircle2, Zap, ArrowRight, Lock, Globe, TrendingUp, X, BarChart3, Crown, Building2, LineChart, BrainCircuit, ShieldAlert, MessagesSquare } from 'lucide-react'
 import cloudnetQR from '../assets/img/cloudnetid.jpeg'
 import planImage from '../assets/download/plan.jpg'
+import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
+import ProductJourney from '../components/cloudnet/ProductJourney'
+import AIEngineConnect from '../components/cloudnet/AIEngineConnect'
+
+const AI_BENEFITS = [
+  { icon: LineChart, title: 'Predictive Sales Forecasting', desc: 'Anticipate busy shifts and plan staff, stock, and prep accordingly.' },
+  { icon: BrainCircuit, title: 'Smart Inventory Reordering', desc: 'AI recommends restock levels for ingredients and menu items automatically.' },
+  { icon: ShieldAlert, title: 'Anomaly Detection', desc: 'Flags unusual discounts, voids, or order patterns across locations.' },
+  { icon: MessagesSquare, title: 'AI Chat Insights', desc: 'Ask questions about your reports and get instant, plain-language answers.' }
+]
 
 const RestaurantPOS = () => {
   const [activeTab, setActiveTab] = useState('overview')
@@ -421,6 +431,13 @@ const RestaurantPOS = () => {
         </div>
       </section>
 
+      {/* Product Journey Strip */}
+      <section className="py-8 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <ProductJourney stages={['Orders', 'KOT', 'Billing', 'Inventory', 'Sales', 'Insights']} />
+        </div>
+      </section>
+
       {/* Tab System Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
@@ -452,6 +469,14 @@ const RestaurantPOS = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* CloudNet AI Engine Integration Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <CloudNetworkBackground density="low" />
+        <div className="container mx-auto px-4 relative">
+          <AIEngineConnect product="ChefMate POS" benefits={AI_BENEFITS} />
         </div>
       </section>
 

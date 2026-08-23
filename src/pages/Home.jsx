@@ -1,7 +1,25 @@
 import { Helmet } from 'react-helmet-async'
 import HeroSlider from '../components/HeroSlider'
-import { Code2, Globe, Smartphone, Database, Cloud, Shield, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Code2, Globe, Smartphone, Database, Cloud, Shield, ArrowRight, CheckCircle2, Network } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import ScrollReveal from '../components/animations/ScrollReveal'
+import AnimatedCounter from '../components/animations/AnimatedCounter'
+import JourneyProgress from '../components/animations/JourneyProgress'
+import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
+import EcosystemNetwork from '../components/cloudnet/EcosystemNetwork'
+import DataFlowSection from '../components/cloudnet/DataFlowSection'
+import AIEngineReveal from '../components/cloudnet/AIEngineReveal'
+import JourneyPath from '../components/cloudnet/JourneyPath'
+
+const SectionKicker = ({ stage, label }) => (
+  <ScrollReveal direction="none" className="text-center mb-4">
+    <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary">
+      <Network size={14} />
+      {stage}
+    </span>
+    {label && <p className="text-slate-500 text-xs mt-1 uppercase tracking-wide">{label}</p>}
+  </ScrollReveal>
+)
 
 const Home = () => {
   const services = [
@@ -65,14 +83,36 @@ const Home = () => {
         <meta property="og:url" content="https://www.cloudnetsoftwares.com/" />
         <meta property="og:type" content="website" />
       </Helmet>
+      {/* Scroll progress through the CloudNet journey */}
+      <JourneyProgress />
+
       {/* Hero Slider */}
       <HeroSlider />
+
+      {/* CloudNet Ecosystem Section */}
+      <section className="relative py-24 bg-slate-950 overflow-hidden">
+        <CloudNetworkBackground density="medium" />
+        <div className="container mx-auto px-4 relative">
+          <SectionKicker stage="Cloud" />
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              One Ecosystem. <span className="text-primary">Every Business Need.</span>
+            </h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              Every CloudNet application is connected - built on one platform, so your business runs as one
+              connected system instead of scattered tools.
+            </p>
+          </ScrollReveal>
+          <EcosystemNetwork />
+        </div>
+      </section>
 
       {/* About Our Work Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            <ScrollReveal direction="left">
+              <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-primary mb-3">Software</span>
               <h2 className="section-title">
                 About Our <span className="text-primary">Work</span>
               </h2>
@@ -101,11 +141,11 @@ const Home = () => {
                 <span>Learn More About Us</span>
                 <ArrowRight size={20} />
               </Link>
-            </div>
-            <div className="relative">
+            </ScrollReveal>
+            <ScrollReveal direction="right" className="relative">
               <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop" 
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop"
                   alt="Team Collaboration"
                   className="w-full h-auto"
                 />
@@ -122,7 +162,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -132,42 +172,93 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {stats.map((stat, index) => (
-              <div key={index} className="text-white">
-                <h3 className="text-4xl md:text-5xl font-bold mb-2">{stat.number}</h3>
+              <ScrollReveal key={index} direction="up" delay={index * 0.08} className="text-white">
+                <AnimatedCounter value={stat.number} className="block text-4xl md:text-5xl font-bold mb-2" />
                 <p className="text-lg opacity-90">{stat.label}</p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Data Section */}
+      <section className="relative py-24 bg-slate-950 overflow-hidden">
+        <CloudNetworkBackground density="low" />
+        <div className="container mx-auto px-4 relative">
+          <SectionKicker stage="Data" />
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              Your Business Generates Data <span className="text-primary">Every Day</span>
+            </h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              CloudNet brings it all together - sales, inventory, access, and customer activity, from every
+              connected product, in one place.
+            </p>
+          </ScrollReveal>
+          <DataFlowSection />
+        </div>
+      </section>
+
+      {/* CloudNet AI Engine Reveal */}
+      <section className="relative py-24 bg-slate-950 overflow-hidden">
+        <video
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          src="/videos/clario-ai-reveal.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-950/70 to-slate-950" />
+        <div className="container mx-auto px-4 relative">
+          <SectionKicker stage="AI" />
+          <AIEngineReveal />
+        </div>
+      </section>
+
+      {/* From Data to Decisions */}
+      <section className="py-24 bg-slate-950">
+        <div className="container mx-auto px-4">
+          <SectionKicker stage="Intelligence → Growth" />
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+              From Data to <span className="text-primary">Decisions</span>
+            </h2>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              This is how CloudNet turns everyday business activity into growth.
+            </p>
+          </ScrollReveal>
+          <JourneyPath />
         </div>
       </section>
 
       {/* Services Section */}
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
+          <ScrollReveal className="text-center mb-16">
             <h2 className="section-title">
               Our <span className="text-primary">Services</span>
             </h2>
             <p className="section-subtitle">
               Comprehensive Software Solutions for Every Need
             </p>
-          </div>
+          </ScrollReveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
-              <div 
-                key={index} 
-                className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group"
-              >
-                <div className="text-primary mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
+              <ScrollReveal key={index} delay={(index % 3) * 0.1}>
+                <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 group h-full">
+                  <div className="text-primary mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900">{service.title}</h3>
+                  <p className="text-gray-600 mb-4">{service.description}</p>
+                  <Link to="/services" className="text-primary font-medium inline-flex items-center space-x-2 hover:space-x-3 transition-all">
+                    <span>Learn More</span>
+                    <ArrowRight size={18} />
+                  </Link>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-900">{service.title}</h3>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <Link to="/services" className="text-primary font-medium inline-flex items-center space-x-2 hover:space-x-3 transition-all">
-                  <span>Learn More</span>
-                  <ArrowRight size={18} />
-                </Link>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -175,7 +266,7 @@ const Home = () => {
 
       {/* CTA Section */}
       <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 text-center">
+        <ScrollReveal className="container mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Ready to Start Your <span className="text-primary">Project?</span>
           </h2>
@@ -190,7 +281,7 @@ const Home = () => {
               View Our Work
             </Link>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
     </div>
   )

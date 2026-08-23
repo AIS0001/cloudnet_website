@@ -31,15 +31,20 @@ const Navbar = () => {
     { path: '/resources/profit-loss-calculator', label: 'Profit & Loss Calculator' },
   ]
 
-  const productSubmenu = [
+  const softwareSubmenu = [
     { path: '/products/restaurant-pos', label: 'Restaurant POS' },
     { path: '/products/nightpulse', label: 'NightPulse' },
     { path: '/products/erp-solution', label: 'ERP Solution' },
-    { path: '/products/thermal-paper', label: 'Thermal Paper' },
-    { path: '/products/printer', label: 'Printer' },
+    { path: '/products/cloudscreen', label: 'CloudScreen' },
+    { path: '/products/cloudeye', label: 'CloudEye' }
+  ]
+
+  const hardwareSubmenu = [
     { path: '/products/pos-machine', label: 'POS Machine' },
     { path: '/products/kiosk-machine', label: 'Kiosk Machine' },
     { path: '/products/access-gate-system', label: 'Access Gate System' },
+    { path: '/products/printer', label: 'Printer' },
+    { path: '/products/thermal-paper', label: 'Thermal Paper' },
     { path: '/products/barcode-scanner', label: 'Barcode Scanner' }
   ]
 
@@ -84,12 +89,26 @@ const Navbar = () => {
                 <span>Products</span>
                 <ChevronDown size={18} className="group-hover:rotate-180 transition-transform" />
               </button>
-              <div className="absolute left-0 mt-0 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2 z-50">
-                {productSubmenu.map((item) => (
+              <div className="absolute left-0 mt-0 w-60 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2 z-50">
+                <span className="block px-4 pt-1 pb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">Software</span>
+                {softwareSubmenu.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`block px-4 py-3 hover:bg-orange-50 hover:text-primary transition-colors ${
+                    className={`block px-4 py-2.5 hover:bg-orange-50 hover:text-primary transition-colors ${
+                      location.pathname === item.path ? 'text-primary font-semibold' : 'text-gray-700'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <div className="border-t border-gray-100 my-1.5" />
+                <span className="block px-4 pt-1 pb-1.5 text-xs font-bold uppercase tracking-wider text-gray-400">Hardware</span>
+                {hardwareSubmenu.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`block px-4 py-2.5 hover:bg-orange-50 hover:text-primary transition-colors ${
                       location.pathname === item.path ? 'text-primary font-semibold' : 'text-gray-700'
                     }`}
                   >
@@ -98,6 +117,17 @@ const Navbar = () => {
                 ))}
               </div>
             </div>
+
+            <Link
+              to="/clario-ai"
+              className={`font-medium transition-colors duration-300 ${
+                location.pathname === '/clario-ai'
+                  ? 'text-primary'
+                  : 'text-white hover:text-primary'
+              }`}
+            >
+              Clario AI
+            </Link>
 
             {/* Resources Dropdown */}
             <div className="relative group">
@@ -187,7 +217,26 @@ const Navbar = () => {
             </button>
             {isMobileProductsOpen && (
               <div className="bg-orange-50">
-                {productSubmenu.map((item) => (
+                <span className="block pt-2 pb-1 px-8 text-xs font-bold uppercase tracking-wider text-gray-400">Software</span>
+                {softwareSubmenu.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => {
+                      setIsOpen(false)
+                      setIsMobileProductsOpen(false)
+                    }}
+                    className={`block py-3 px-8 ${
+                      location.pathname === item.path
+                        ? 'text-primary font-semibold'
+                        : 'text-gray-700 hover:text-primary'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+                <span className="block pt-2 pb-1 px-8 text-xs font-bold uppercase tracking-wider text-gray-400">Hardware</span>
+                {hardwareSubmenu.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
@@ -206,6 +255,18 @@ const Navbar = () => {
                 ))}
               </div>
             )}
+
+            <Link
+              to="/clario-ai"
+              onClick={() => setIsOpen(false)}
+              className={`block py-3 px-4 ${
+                location.pathname === '/clario-ai'
+                  ? 'text-primary bg-orange-50'
+                  : 'text-gray-700 hover:text-primary hover:bg-gray-50'
+              }`}
+            >
+              Clario AI
+            </Link>
 
             {/* Mobile Resources Menu */}
             <button

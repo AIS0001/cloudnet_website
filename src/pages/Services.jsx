@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 import { Code2, Globe, Smartphone, Database, Cloud, Shield, Cpu, Palette, ArrowRight, CheckCircle2, Zap, Layers } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import ScrollReveal from '../components/animations/ScrollReveal'
 
 const Services = () => {
   const services = [
@@ -284,8 +285,9 @@ const Services = () => {
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {services.map((service, index) => (
-                <div 
+                <ScrollReveal
                   key={index}
+                  delay={(index % 4) * 0.08}
                   className="bg-white border-2 border-gray-100 p-6 rounded-lg hover:border-primary hover:shadow-lg transition-all duration-300 group"
                 >
                   <div className="text-primary mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -301,7 +303,7 @@ const Services = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
@@ -322,7 +324,7 @@ const Services = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {technologies.map((tech, index) => (
-              <div key={index} className="bg-gradient-to-br from-orange-50 to-white p-8 rounded-lg border-2 border-gray-100 hover:border-primary transition-all duration-300">
+              <ScrollReveal key={index} delay={index * 0.08} className="bg-gradient-to-br from-orange-50 to-white p-8 rounded-lg border-2 border-gray-100 hover:border-primary transition-all duration-300">
                 <Layers className="text-primary mb-4" size={32} />
                 <h3 className="text-xl font-bold mb-4">{tech.category}</h3>
                 <ul className="space-y-2">
@@ -333,7 +335,7 @@ const Services = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -352,13 +354,13 @@ const Services = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {process.map((item, index) => (
-              <div key={index} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 relative group">
+              <ScrollReveal key={index} delay={(index % 3) * 0.1} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 relative group">
                 <div className="absolute -top-5 -right-5 w-20 h-20 bg-gradient-to-br from-primary to-orange-500 rounded-full flex items-center justify-center text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300">
                   {item.step}
                 </div>
                 <h3 className="text-2xl font-bold mb-4 pr-8">{item.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{item.description}</p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>

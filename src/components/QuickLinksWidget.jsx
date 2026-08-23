@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { ChevronLeft, ChevronRight, X, ShoppingCart, BookOpen, Building2, ExternalLink } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X, ShoppingCart, Building2, ExternalLink } from 'lucide-react'
 
+// Kept intentionally short - only the links visitors look for most.
+// Full navigation lives in the main Navbar; this widget is a shortcut,
+// not a sitemap.
 const SECTIONS = [
   {
     title: 'Products',
@@ -11,20 +14,8 @@ const SECTIONS = [
       { to: '/products/restaurant-pos', label: 'Restaurant POS' },
       { to: '/products/nightpulse', label: 'NightPulse (Bar & Club)' },
       { to: '/products/erp-solution', label: 'ERP Solution' },
-      { to: '/products/pos-machine', label: 'POS Machine' },
-      { to: '/products/kiosk-machine', label: 'Kiosk Machine' },
-      { to: '/products/access-gate-system', label: 'Access Gate System' },
-      { to: '/products/printer', label: 'Printer' },
-      { to: '/products/thermal-paper', label: 'Thermal Paper' },
-    ],
-  },
-  {
-    title: 'Resources',
-    icon: BookOpen,
-    color: 'text-emerald-400',
-    links: [
-      { to: '/resources/food-cost-calculator', label: 'Food Cost Calculator' },
-      { to: '/resources/profit-loss-calculator', label: 'Profit & Loss Calculator' },
+      { to: '/products/cloudscreen', label: 'CloudScreen' },
+      { to: '/clario-ai', label: 'Clario AI' },
     ],
   },
   {
@@ -33,10 +24,7 @@ const SECTIONS = [
     color: 'text-blue-400',
     links: [
       { to: '/about', label: 'About Us' },
-      { to: '/services', label: 'Services' },
       { to: '/portfolio', label: 'Case Studies' },
-      { to: '/jobs-vacancy', label: 'Jobs & Vacancy' },
-      { to: '/freelancer-reseller-program', label: 'Reseller Program' },
       { to: '/contact', label: 'Contact Us' },
     ],
   },
@@ -47,7 +35,7 @@ const QuickLinksWidget = () => {
   const location = useLocation()
 
   return (
-    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-40 flex items-center">
+    <div className="fixed right-0 top-[62%] -translate-y-1/2 z-40 flex items-center">
       {/* Slide-out panel */}
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${

@@ -1,85 +1,113 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
-import aiEngineBanner from '../assets/img/cloudnet-ai-engine-banner.webp'
+import {
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+  Cloud,
+  ShoppingCart,
+  Music2,
+  Database,
+  MonitorPlay,
+  Sparkles,
+  Lock,
+  CreditCard
+} from 'lucide-react'
+import CloudNetworkBackground from './cloudnet/CloudNetworkBackground'
+import clarioBadge from '../assets/img/clario-ai-badge.webp'
 
+// One consistent template for every slide - each one answers "what does
+// CloudNet actually do here?" in a single line, and links to the real
+// page for that product so the slide isn't just decoration.
 const HERO_SLIDES = [
   {
-    title: 'CloudNet AI Engine',
-    subtitle: 'One Smart Engine for All Your Software',
-    gradient: 'from-slate-900 to-slate-700',
-    image: aiEngineBanner,
-    comingSoon: true
+    kicker: 'Welcome to CloudNet Softwares',
+    title: 'Connected Software for Every Business',
+    description: 'We build cloud-based POS, ERP, access control, digital signage, and AI tools that run your business - and talk to each other.',
+    points: ['POS & ERP systems', 'Access & hardware', 'AI-powered insights'],
+    icon: Cloud,
+    accent: 'from-blue-600 via-indigo-600 to-purple-600',
+    to: '/products',
+    cta: 'Explore All Products',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&h=1080&q=80'
   },
   {
-    title: 'VPS Hosting Solutions',
-    subtitle: 'Fast, Secure, and Scalable Infrastructure',
-    description: 'Cloudnet delivers high-performance VPS hosting with strong uptime, security, and flexible resources for growing businesses.',
-    gradient: 'from-sky-700 to-cyan-500',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+    kicker: 'Restaurant POS',
+    title: 'ChefMate POS Systems',
+    description: 'Dine-in, takeaway, kitchen display, billing, and inventory - one fast POS platform built for restaurants and cafes.',
+    points: ['Order & kitchen sync', 'Table management', '20+ live reports'],
+    icon: ShoppingCart,
+    accent: 'from-orange-600 via-amber-500 to-orange-700',
+    to: '/products/restaurant-pos',
+    cta: 'Explore Restaurant POS',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&h=1080&q=80'
   },
   {
-    title: 'Restaurant POS System',
-    subtitle: 'Faster Orders, Smoother Service',
-    description: 'Manage dine-in, takeaway, billing, and kitchen workflows with a complete restaurant POS platform built for speed.',
-    gradient: 'from-orange-700 to-amber-500',
-    image: 'https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+    kicker: 'Cafes, Bars, Clubs & Karaoke',
+    title: 'NightPulse POS Systems',
+    description: 'From a single small cafe to a multi-location nightlife chain - billing, rooms, inventory, and Kayotee commissions in one platform.',
+    points: ['Room & table management', 'Kayotee commissions', 'Manager & POS apps'],
+    icon: Music2,
+    accent: 'from-fuchsia-600 via-purple-600 to-indigo-700',
+    to: '/products/nightpulse',
+    cta: 'Explore NightPulse',
+    image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1920&h=1080&q=80'
   },
   {
-    title: 'Hotel PMS System',
-    subtitle: 'Complete Front Desk Control',
-    description: 'Handle reservations, check-ins, room status, and reporting through a reliable property management system for hotels.',
-    gradient: 'from-emerald-700 to-teal-500',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+    kicker: 'Enterprise Resource Planning',
+    title: 'CloudNet ERP Solution',
+    description: 'Unify inventory, finance, supply chain, and reporting into one cloud platform that scales from startup to enterprise.',
+    points: ['Inventory & finance', 'Supply chain tools', 'Real-time analytics'],
+    icon: Database,
+    accent: 'from-blue-700 via-blue-600 to-cyan-600',
+    to: '/products/erp-solution',
+    cta: 'Explore CloudNet ERP',
+    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1920&h=1080&q=80'
   },
   {
-    title: 'Entertainment Venue Software',
-    subtitle: 'Ticketing, Operations, and Customer Flow',
-    description: 'Streamline venue operations with software for ticket sales, access control, and performance analytics.',
-    gradient: 'from-fuchsia-700 to-rose-500',
-    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+    kicker: 'New: Digital Advertising',
+    title: 'CloudScreen Displays',
+    description: 'Turn LED and digital screens into a managed ad network - sell time slots, run event packages, and manage every screen remotely.',
+    points: ['Prime-time ad slots', 'Event & occasion packages', 'Remote screen management'],
+    icon: MonitorPlay,
+    accent: 'from-purple-700 via-fuchsia-600 to-orange-500',
+    to: '/products/cloudscreen',
+    cta: 'Explore CloudScreen',
+    image: 'https://images.unsplash.com/photo-1533106497176-45ae19e68ba2?auto=format&fit=crop&w=1920&h=1080&q=80'
   },
   {
-    title: 'Mobile App Development',
-    subtitle: 'Tour & Travel, CRM, and More',
-    description: 'We design and develop powerful mobile apps including Tour & Travel booking apps, CRM apps, on-demand service apps, and custom business apps for Android and iOS.',
-    gradient: 'from-violet-700 to-purple-500',
-    image: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+    kicker: 'Your AI Business Assistant',
+    title: 'Clario AI',
+    description: 'Ask about your business in plain language and get answers from your real data - plus automation that handles the busywork for you.',
+    points: ['Voice & text AI assistant', 'Plain-language automation', 'Works across CloudNet apps'],
+    icon: Sparkles,
+    accent: 'from-slate-800 via-blue-700 to-orange-500',
+    to: '/clario-ai',
+    cta: 'Meet Clario AI',
+    badgeImage: clarioBadge,
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1920&h=1080&q=80'
   },
   {
-    title: 'Custom Software Solutions',
-    subtitle: 'Built Around Your Business',
-    description: 'From internal tools to enterprise apps, Cloudnet builds custom software tailored to your exact workflow and goals.',
-    gradient: 'from-indigo-700 to-blue-500',
-    image: 'https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
-  },
-  {
-    title: 'Digital Marketing Services',
-    subtitle: 'Reach More Customers Online',
-    description: 'Grow visibility and leads through SEO, paid campaigns, social media strategy, and conversion-focused digital marketing.',
-    gradient: 'from-red-700 to-orange-500',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
-  },
-  {
-    title: 'GT81EZ Pro Mobile Terminal POS',
-    subtitle: 'Handheld POS, Anywhere You Do Business',
-    description: 'A compact mobile terminal with built-in printer, Android 13, 4G/WiFi, and long-lasting battery - perfect for order taking and billing on the move.',
-    gradient: 'from-orange-700 to-amber-600',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
-  },
-  {
-    title: 'GT90EZ Pro Tablet POS',
-    subtitle: 'Complete POS Solution for Your Business',
-    description: 'An 8" Android 13 tablet POS with built-in printer, NFC payments, and 4G/WiFi connectivity - everything you need for fast, smart checkout.',
-    gradient: 'from-violet-700 to-blue-600',
-    image: 'https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
-  },
-  {
+    kicker: 'Access Control',
     title: 'Smart Gate Access System',
-    subtitle: 'Secure. Smart. Connected.',
-    description: 'Cloud-based centralised access control with face recognition, RFID card access, and QR code entry - manage every gate from one dashboard, anywhere.',
-    gradient: 'from-teal-700 to-emerald-500',
-    image: 'https://images.unsplash.com/photo-1565514020179-026b92b2d70b?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+    description: 'Cloud-based, centralized entry and exit control with face recognition, RFID cards, and QR codes - manage every gate from anywhere.',
+    points: ['Face recognition entry', 'RFID & QR access', 'One cloud dashboard'],
+    icon: Lock,
+    accent: 'from-teal-700 via-emerald-600 to-teal-500',
+    to: '/products/access-gate-system',
+    cta: 'Explore Access Gate System',
+    image: 'https://images.unsplash.com/photo-1595079676339-1534801ad6cf?auto=format&fit=crop&w=1920&h=1080&q=80'
+  },
+  {
+    kicker: 'POS Hardware',
+    title: 'POS & Kiosk Terminals',
+    description: 'Dual-screen, single-screen, handheld, and self-service kiosk hardware - built to run CloudNet software on your counter or on the move.',
+    points: ['Dual & handheld POS', 'Self-order kiosks', 'Built-in thermal printing'],
+    icon: CreditCard,
+    accent: 'from-slate-700 via-slate-600 to-orange-600',
+    to: '/products/pos-machine',
+    cta: 'Explore POS Hardware',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1920&h=1080&q=80'
   }
 ]
 
@@ -89,7 +117,7 @@ const HeroSlider = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length)
-    }, 5000)
+    }, 6000)
     return () => clearInterval(timer)
   }, [])
 
@@ -102,100 +130,105 @@ const HeroSlider = () => {
   }
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
-      {HERO_SLIDES.map((slide, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          {slide.comingSoon ? (
-            <>
-              {/* Full infographic banner, shown uncropped */}
-              <div className="absolute inset-0 bg-slate-950 flex items-center justify-center">
+    <div className="relative h-screen w-full overflow-hidden bg-slate-950">
+      {HERO_SLIDES.map((slide, index) => {
+        const Icon = slide.icon
+        const isActive = index === currentSlide
+        return (
+          <div
+            key={slide.title}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
+            aria-hidden={!isActive}
+          >
+            {/* Per-slide photo, dimmed + tinted, with the shared network overlay on top */}
+            <div className="absolute inset-0 bg-slate-950">
+              {slide.image && (
                 <img
                   src={slide.image}
-                  alt="CloudNet AI Engine - one smart engine for all your software, coming soon"
-                  className="w-full h-full object-contain"
+                  alt=""
+                  className="w-full h-full object-cover opacity-30"
                 />
-              </div>
+              )}
+              <div className={`absolute inset-0 bg-gradient-to-br ${slide.accent} opacity-60 mix-blend-multiply`} />
+              <CloudNetworkBackground density="medium" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-slate-950/60" />
+            </div>
 
-              {/* Coming Soon ribbon + CTA, kept out of the infographic's own content */}
-              <div className="relative h-full flex flex-col items-center justify-between py-8 px-4">
-                <span className="inline-flex items-center gap-2 bg-primary text-white text-sm md:text-base font-bold uppercase tracking-wide px-5 py-2 rounded-full shadow-xl animate-fade-in">
-                  <Sparkles size={18} />
-                  Coming Soon
+            {/* Content */}
+            <div className="relative h-full flex items-center justify-center text-center px-4">
+              <div className="max-w-3xl">
+                <span className="inline-flex items-center gap-2 bg-white/10 border border-white/15 backdrop-blur text-white text-xs md:text-sm font-bold uppercase tracking-wide px-4 py-1.5 rounded-full mb-6">
+                  {slide.kicker}
                 </span>
+
+                <div className="flex justify-center mb-6">
+                  {slide.badgeImage ? (
+                    <img src={slide.badgeImage} alt="" className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-2xl" />
+                  ) : (
+                    <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${slide.accent} flex items-center justify-center shadow-2xl`}>
+                      <Icon className="text-white" size={36} />
+                    </div>
+                  )}
+                </div>
+
+                <h1 className="text-white text-4xl md:text-6xl font-bold mb-5">
+                  {slide.title}
+                </h1>
+                <p className="text-slate-200 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+                  {slide.description}
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3 mb-9">
+                  {slide.points.map((point) => (
+                    <span
+                      key={point}
+                      className="bg-white/10 border border-white/15 text-white text-xs md:text-sm font-medium px-3 py-1.5 rounded-full"
+                    >
+                      {point}
+                    </span>
+                  ))}
+                </div>
+
                 <Link
-                  to="/contact"
-                  className="bg-white text-primary hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-xl animate-slide-up"
+                  to={slide.to}
+                  className="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-gray-100 font-semibold py-3.5 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-xl"
                 >
-                  Get Notified When It Launches
+                  <span>{slide.cta}</span>
+                  <ArrowRight size={20} />
                 </Link>
               </div>
-            </>
-          ) : (
-            <>
-              {/* Background Image with Overlay */}
-              <div className="absolute inset-0">
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className="w-full h-full object-cover brightness-75"
-                />
-                <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient} opacity-20`}></div>
-              </div>
-
-              {/* Content */}
-              <div className="relative h-full flex items-center justify-center text-center px-4">
-                <div className="max-w-4xl">
-                  <h2 className="text-white text-xl md:text-2xl font-semibold mb-4 animate-fade-in">
-                    {slide.subtitle}
-                  </h2>
-                  <h1 className="text-white text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
-                    {slide.title}
-                  </h1>
-                  <p className="text-white text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-slide-up">
-                    {slide.description}
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
-                    <button className="bg-white text-primary hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-xl">
-                      Get Started
-                    </button>
-                    <button className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold py-4 px-8 rounded-lg transition-all duration-300">
-                      Learn More
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      ))}
+            </div>
+          </div>
+        )
+      })}
 
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300"
+        aria-label="Previous slide"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 z-10"
       >
-        <ChevronLeft size={32} />
+        <ChevronLeft size={28} />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300"
+        aria-label="Next slide"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 z-10"
       >
-        <ChevronRight size={32} />
+        <ChevronRight size={28} />
       </button>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3">
-        {HERO_SLIDES.map((_, index) => (
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+        {HERO_SLIDES.map((slide, index) => (
           <button
-            key={index}
+            key={slide.title}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide ? 'bg-white w-8' : 'bg-white/50'
+            aria-label={`Go to slide: ${slide.title}`}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide ? 'bg-white w-8' : 'bg-white/40 w-2'
             }`}
           />
         ))}
