@@ -35,7 +35,7 @@ const QuickLinksWidget = () => {
   const location = useLocation()
 
   return (
-    <div className="fixed right-0 top-[62%] -translate-y-1/2 z-40 flex items-center">
+    <div className="hidden md:flex fixed right-0 top-[62%] -translate-y-1/2 z-40 items-center">
       {/* Slide-out panel */}
       <div
         className={`transition-all duration-300 ease-in-out overflow-hidden ${

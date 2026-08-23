@@ -8,7 +8,21 @@
       "Bash(ffmpeg -y -i \"D:/Projects/cloud_eye/flutter_App/assets/VIDEOS/CLARIA VIDEO.mp4\" -an -vf \"scale=960:-2\" -c:v libx264 -crf 26 -preset slow -movflags +faststart \"d:/Projects/cloudnet_website/public/videos/clario-ai-reveal.mp4\")",
       "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"video: %{http_code}\\\\n\" \"http://localhost:3001/videos/clario-ai-reveal.mp4\")",
       "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"nightpulse: %{http_code}\\\\n\" \"http://localhost:3001/products/nightpulse\")",
-      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"about: %{http_code}\\\\n\" \"http://localhost:3000/about\")"
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"about: %{http_code}\\\\n\" \"http://localhost:3000/about\")",
+      "Bash(ffmpeg -i \"d:/Projects/cloudnet_website/src/assets/img/3840x2160logo.png\")",
+      "Bash(ffmpeg -y -i \"d:/Projects/cloudnet_website/src/assets/img/3840x2160logo.png\" -vf \"crop=5477:5477:0:0,scale=512:512\" \"C:\\\\Users\\\\LOQ\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Projects-cloudnet-website\\\\652e7b5d-1c9c-4946-b06c-9ec62c9c272e\\\\scratchpad\\\\favicon_test.png\")",
+      "Bash(ffmpeg -y -i \"d:/Projects/cloudnet_website/src/assets/img/3840x2160logo.png\" -vf \"crop=6800:6800:0:-600,scale=512:512\" \"C:\\\\Users\\\\LOQ\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Projects-cloudnet-website\\\\652e7b5d-1c9c-4946-b06c-9ec62c9c272e\\\\scratchpad\\\\favicon_test2.png\")",
+      "Bash(ffmpeg -y -i \"d:/Projects/cloudnet_website/src/assets/img/3840x2160logo.png\" -vf \"crop=5000:5477:0:0,pad=5477:5477:\\(ow-iw\\)/2:\\(oh-ih\\)/2:color=0x00000000,scale=512:512\" \"C:\\\\Users\\\\LOQ\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Projects-cloudnet-website\\\\652e7b5d-1c9c-4946-b06c-9ec62c9c272e\\\\scratchpad\\\\favicon_test3.png\")",
+      "Bash(ffmpeg -y -i \"d:/Projects/cloudnet_website/src/assets/img/3840x2160logo.png\" -vf \"crop=6200:5477:0:0,pad=6600:5900:200:210:color=0x00000000,scale=512:512\" \"C:\\\\Users\\\\LOQ\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--Projects-cloudnet-website\\\\652e7b5d-1c9c-4946-b06c-9ec62c9c272e\\\\scratchpad\\\\favicon_test4.png\")",
+      "Bash(ffmpeg -y -i src/assets/img/3840x2160logo.png -vf __TRACKED_VAR__,scale=512:512 public/favicon-512.png)",
+      "Bash(ffmpeg -y -i \"src/assets/img/3840x2160logo.png\" -vf \"crop=6150:5477:0:0,pad=6550:5900:200:210:color=0x00000000,scale=48:48\" \"public/favicon.ico\")",
+      "Read(//c/Windows/Fonts/**)",
+      "Bash(ffmpeg -y -f lavfi -i color=c=0x0f172a:s=1200x630 -i src/assets/img/3840x2160logo-optimized.png -filter_complex '[1:v]scale=800:-1[logo];[0:v][logo]overlay=\\(W-w\\)/2:180,drawtext=fontfile='\\\\''C\\\\:/Windows/Fonts/arial.ttf'\\\\'':text='\\\\''Connected Software. Intelligent Business.'\\\\'':fontcolor=white:fontsize=34:x=\\(w-text_w\\)/2:y=440,drawtext=fontfile='\\\\''C\\\\:/Windows/Fonts/arial.ttf'\\\\'':text='\\\\''POS . ERP . AI . Access Control . Digital Signage'\\\\'':fontcolor=0xf97316:fontsize=24:x=\\(w-text_w\\)/2:y=500' public/og-image.jpg)",
+      "Bash(ffmpeg -y -f lavfi -i color=c=0x0f172a:s=1200x630 -i src/assets/img/3840x2160logo-optimized.png -frames:v 1 -filter_complex '[1:v]scale=800:-1[logo];[0:v][logo]overlay=\\(W-w\\)/2:180,drawtext=fontfile='\\\\''C\\\\:/Windows/Fonts/arial.ttf'\\\\'':text='\\\\''Connected Software. Intelligent Business.'\\\\'':fontcolor=white:fontsize=34:x=\\(w-text_w\\)/2:y=440,drawtext=fontfile='\\\\''C\\\\:/Windows/Fonts/arial.ttf'\\\\'':text='\\\\''POS . ERP . AI . Access Control . Digital Signage'\\\\'':fontcolor=0xf97316:fontsize=24:x=\\(w-text_w\\)/2:y=500' public/og-image.jpg)",
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"favicon.ico: %{http_code}\\\\n\" \"http://localhost:3001/favicon.ico\")",
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"og-image.jpg: %{http_code}\\\\n\" \"http://localhost:3001/og-image.jpg\")",
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"apple-touch-icon.png: %{http_code}\\\\n\" \"http://localhost:3001/apple-touch-icon.png\")",
+      "Bash(MSYS_NO_PATHCONV=1 curl -s -o /dev/null -w \"sitemap.xml: %{http_code}\\\\n\" \"http://localhost:3001/sitemap.xml\")"
     ]
   }
 }

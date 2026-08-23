@@ -340,7 +340,7 @@ const Navbar = () => {
       </a>
       <a
         href="https://line.me/R/ti/p/@540krqkm"
-        className="flex items-center gap-2 rounded-full bg-emerald-500 text-white shadow-lg px-4 py-3 hover:bg-emerald-600 transition-colors"
+        className="hidden md:flex items-center gap-2 rounded-full bg-emerald-500 text-white shadow-lg px-4 py-3 hover:bg-emerald-600 transition-colors"
         aria-label="Chat on LINE"
         rel="noopener noreferrer"
         target="_blank"
@@ -350,7 +350,7 @@ const Navbar = () => {
       </a>
       <a
         href="tel:+66948712350"
-        className="flex items-center gap-2 rounded-full bg-orange-600 text-white shadow-lg px-4 py-3 hover:bg-orange-700 transition-colors"
+        className="hidden md:flex items-center gap-2 rounded-full bg-orange-600 text-white shadow-lg px-4 py-3 hover:bg-orange-700 transition-colors"
         aria-label="Call +66 9487 12350"
       >
         <PhoneCall size={18} />
