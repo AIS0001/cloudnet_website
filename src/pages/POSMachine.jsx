@@ -307,6 +307,189 @@ const POSMachine = () => {
           ]
         }
       }
+    },
+    {
+      id: 'gt90ez-pro',
+      name: 'GT90EZ Pro Tablet POS',
+      model: 'GT90EZ Pro',
+      pricing: 'Starting from ฿10,650',
+      images: [
+        '/img/gt90ez-pro/tablet POS.png'
+      ],
+      highlights: [
+        '8" HD capacitive touchscreen running Android 13 for smooth performance',
+        'Built-in high-speed thermal printer for instant receipts',
+        'Built-in NFC reader for fast contactless card and mobile payments',
+        '4G / WiFi connectivity so you can take orders anywhere',
+        'Long-lasting battery for full-day business operation',
+        'Built-in camera with QR code scanning support',
+        'Durable, ergonomic design with integrated kickstand',
+        'Supports multiple payment methods for any business type'
+      ],
+      specifications: {
+        'Display': '8" HD capacitive touchscreen',
+        'Operating System': 'Android 13',
+        'Printer': 'Built-in high-speed thermal printer',
+        'NFC': 'Built-in NFC contactless payment reader',
+        'Connectivity': '4G LTE / WiFi',
+        'Scanner': 'Built-in camera with QR/barcode scanning',
+        'Battery': 'Long-lasting rechargeable battery',
+        'Charging Port': 'USB Type-C',
+        'Build': 'Durable design with integrated kickstand',
+        'Warranty': '1-year product warranty with after-sales support',
+        'Ideal For': 'Restaurants, cafes, retail stores, and pop-up shops'
+      },
+      applications: [
+        { text: 'Restaurant counter checkout', image: appRestaurantReceipts },
+        { text: 'Retail checkout counters', image: appRetailCheckout },
+        { text: 'Mobile POS and tablet ordering', image: appMobilePos },
+        { text: 'Pop-up stores and kiosks', image: appPopupStores },
+        { text: 'Cafes and quick service outlets', image: appRestaurantReceipts }
+      ],
+      tabs: [
+        { id: 'detail', label: 'Product Detail', icon: Info },
+        { id: 'configuration', label: 'Product Configuration', icon: Cog },
+        { id: 'download', label: 'Download', icon: Download },
+        { id: 'description', label: 'Product Description', icon: Monitor }
+      ],
+      tabContent: {
+        detail: {
+          title: 'GT90EZ Pro Features Overview',
+          items: [
+            '8" HD capacitive touchscreen for clear, responsive operation',
+            'Android 13 operating system for stable, smooth performance',
+            'Built-in high-speed thermal printer for quick receipt printing',
+            'Built-in NFC reader supports tap-to-pay card and mobile wallets',
+            '4G / WiFi connectivity keeps the device online at all times',
+            'Long-lasting battery supports a full day of continuous use',
+            'Built-in camera enables QR code and barcode scanning',
+            'Rugged, textured body with integrated kickstand for countertop use'
+          ]
+        },
+        configuration: {
+          title: 'Standard Package Includes',
+          items: [
+            'GT90EZ Pro Tablet POS Terminal x1',
+            'Built-in Thermal Printer (Pre-installed) x1',
+            'Power Adapter and Charging Cable x1',
+            'USB Type-C Cable x1',
+            'Quick Start Guide and Documentation x1',
+            '1-Year Warranty Card x1'
+          ]
+        },
+        download: {
+          title: 'Available Downloads',
+          items: [
+            'Device Driver and Firmware Package (Android)',
+            'Technical Documentation and User Manual',
+            'POS Software Setup Guide',
+            'Thermal Printer Driver and SDK',
+            'NFC Payment Integration Guide',
+            'Troubleshooting and Support Guide'
+          ]
+        },
+        description: {
+          title: 'Complete Product Description',
+          items: [
+            'The GT90EZ Pro is a complete all-in-one Tablet POS solution built for fast-moving businesses of every size.',
+            'Its 8" HD touchscreen runs on Android 13, giving you a smooth, app-friendly interface for billing and management.',
+            'A built-in high-speed thermal printer prints receipts instantly without any extra cables or accessories.',
+            'The integrated NFC reader makes accepting contactless card and mobile wallet payments fast and secure.',
+            '4G and WiFi connectivity ensure the device stays online whether on the counter or out in the field.',
+            'A long-lasting battery and durable, ergonomic build with a kickstand make it reliable for all-day use.',
+            'Starting from just ฿10,650, the GT90EZ Pro delivers premium POS performance backed by a 1-year warranty and dedicated after-sales support.',
+            'Perfect for restaurants, cafes, retail shops, and pop-up stores looking for a smart, all-in-one POS solution.'
+          ]
+        }
+      }
+    },
+    {
+      id: 'gt81ez-pro',
+      name: 'GT81EZ Pro Mobile Terminal POS',
+      model: 'GT81EZ Pro',
+      pricing: 'Starting from ฿7,560',
+      images: [
+        '/img/gt81ez-pro/Mobile POS.png'
+      ],
+      highlights: [
+        'Compact handheld design for mobile order taking and billing',
+        'Android 13 operating system for fast, stable performance',
+        'Built-in thermal printer for instant on-the-spot receipts',
+        '4G connectivity keeps you connected wherever you go',
+        'Long-lasting battery for all-day mobile use',
+        'Durable, rugged build designed for daily business use',
+        '1-year warranty with dedicated after-sales support'
+      ],
+      specifications: {
+        'Display': 'Handheld touchscreen display',
+        'Operating System': 'Android 13',
+        'Printer': 'Built-in high-speed thermal printer',
+        'Connectivity': '4G LTE / WiFi',
+        'Battery': 'Long-lasting rechargeable battery',
+        'Charging Port': 'USB Type-C',
+        'Build': 'Durable, portable handheld design',
+        'Warranty': '1-year product warranty with after-sales support',
+        'Ideal For': 'Restaurants, cafes, retail shops, and delivery/field service teams'
+      },
+      applications: [
+        { text: 'Mobile order taking and billing', image: appMobilePos },
+        { text: 'Restaurant counter receipts', image: appRestaurantReceipts },
+        { text: 'Retail checkout on the move', image: appRetailCheckout },
+        { text: 'Pop-up stores and outdoor events', image: appPopupStores }
+      ],
+      tabs: [
+        { id: 'detail', label: 'Product Detail', icon: Info },
+        { id: 'configuration', label: 'Product Configuration', icon: Cog },
+        { id: 'download', label: 'Download', icon: Download },
+        { id: 'description', label: 'Product Description', icon: Monitor }
+      ],
+      tabContent: {
+        detail: {
+          title: 'GT81EZ Pro Features Overview',
+          items: [
+            'Compact, lightweight handheld design built for mobility',
+            'Android 13 operating system for fast and reliable performance',
+            'Built-in high-speed thermal printer for instant receipt printing',
+            '4G LTE / WiFi connectivity for use anywhere in or out of store',
+            'Long-lasting battery supports extended mobile operation',
+            'Durable, rugged housing built to withstand daily business use',
+            'Backed by 1-year warranty and dedicated after-sales support'
+          ]
+        },
+        configuration: {
+          title: 'Standard Package Includes',
+          items: [
+            'GT81EZ Pro Mobile Terminal POS x1',
+            'Built-in Thermal Printer (Pre-installed) x1',
+            'Power Adapter and Charging Cable x1',
+            'USB Type-C Cable x1',
+            'Quick Start Guide and Documentation x1',
+            '1-Year Warranty Card x1'
+          ]
+        },
+        download: {
+          title: 'Available Downloads',
+          items: [
+            'Device Driver and Firmware Package (Android)',
+            'Technical Documentation and User Manual',
+            'POS Software Setup Guide',
+            'Thermal Printer Driver and SDK',
+            'Troubleshooting and Support Guide'
+          ]
+        },
+        description: {
+          title: 'Complete Product Description',
+          items: [
+            'The GT81EZ Pro is a compact mobile terminal POS designed for businesses that need to take orders and payments on the move.',
+            'Running Android 13, it delivers fast, stable performance for POS apps and back-office software.',
+            'A built-in high-speed thermal printer means receipts are ready instantly, with no extra hardware required.',
+            '4G LTE and WiFi connectivity keep the device online whether you are in-store, at an event, or out on delivery.',
+            'A long-lasting battery and durable, portable build make it ideal for full-day mobile operations.',
+            'Starting from just ฿7,560, the GT81EZ Pro is a cost-effective choice for restaurants, cafes, retail shops, and field service teams.',
+            'Every unit is backed by a 1-year warranty and CloudNet\'s dedicated after-sales support team.'
+          ]
+        }
+      }
     }
   ]
 

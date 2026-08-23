@@ -229,7 +229,8 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Team Section — hidden until real photos are provided */}
+      {false && (
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -244,8 +245,8 @@ const About = () => {
             {team.map((member, index) => (
               <div key={index} className="group">
                 <div className="relative overflow-hidden rounded-xl shadow-lg mb-4">
-                  <img 
-                    src={member.image} 
+                  <img
+                    src={member.image}
                     alt={member.name}
                     className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -258,6 +259,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      )}
     </div>
   )
 }

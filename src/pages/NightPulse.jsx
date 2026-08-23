@@ -1,9 +1,19 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, CheckCircle2, Zap, ArrowRight, Lock, Globe, TrendingUp, X, BarChart3, Crown, Building2, Music2, Smartphone } from 'lucide-react'
+import { ShoppingCart, Grid, MessageSquare, Download, Mail, Phone, MapPin, CheckCircle2, Zap, ArrowRight, Lock, Globe, TrendingUp, X, BarChart3, Crown, Building2, Music2, Smartphone, Sparkles, BrainCircuit, LineChart, ShieldAlert, MessagesSquare, PlayCircle } from 'lucide-react'
 import cloudnetQR from '../assets/img/cloudnetid.jpeg'
 import planImage from '../assets/download/plan.jpg'
+import aiEngineBadge from '../assets/img/cloudnet-ai-engine-badge.png'
+
+const nightclubImage = 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1600&h=1200&q=80'
+const barCounterImage = 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&h=900&q=80'
+const karaokeMicImage = 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&h=900&q=80'
+const crowdImage = 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=1200&h=900&q=80'
+const cafeImage = 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&h=900&q=80'
+const restaurantImage = 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&h=1200&q=80'
+const restaurantChainImage = 'https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&h=900&q=80'
+const NIGHTPULSE_PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.cloudnet.nightpulse&hl=en'
 
 const NightPulse = () => {
   const [activeTab, setActiveTab] = useState('overview')
@@ -202,9 +212,10 @@ const NightPulse = () => {
         return (
           <div className="space-y-6">
             <p className="text-gray-700 leading-relaxed mb-6">
-              CloudNet NightPulse is a comprehensive cloud-based point of sale system designed specifically for bars,
-              clubs, and karaoke (Kayotee) venues. With 20+ integrated modules including Kayotee commission management
-              and dedicated Manager and POS apps, manage every aspect of your venue from a single platform.
+              CloudNet NightPulse is a comprehensive cloud-based point of sale system built for cafes, restaurants,
+              bars, clubs, and karaoke (Kayotee) venues alike - whether you run a single small outlet or a large
+              multi-location restaurant chain. With 20+ integrated modules including Kayotee commission management
+              and dedicated Manager and POS apps, manage every aspect of your business from a single platform.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-gradient-to-br from-orange-50 to-white p-6 rounded-lg border border-orange-100">
@@ -431,29 +442,165 @@ const NightPulse = () => {
   return (
     <div>
       <Helmet>
-        <title>NightPulse POS - Bar, Club & Karaoke (Kayotee) Management System</title>
-        <meta name="description" content="NightPulse POS by CloudNet - Cloud-based POS system for bars, clubs, and karaoke venues with billing, inventory, room management, Kayotee commission management, and Manager/POS apps." />
-        <meta name="keywords" content="NightPulse, karaoke POS, kayotee commission management, bar POS, club management software, nightlife POS, cloud-based POS" />
+        <title>NightPulse POS - Cafe, Restaurant, Bar, Club & Karaoke (Kayotee) Management System</title>
+        <meta name="description" content="NightPulse POS by CloudNet - Cloud-based POS system for cafes, restaurants (single outlets to multi-location chains), bars, clubs, and karaoke venues, with billing, inventory, room/table management, Kayotee commission management, and Manager/POS apps." />
+        <meta name="keywords" content="NightPulse, cafe POS, restaurant POS, multi-location restaurant chain software, karaoke POS, kayotee commission management, bar POS, club management software, nightlife POS, cloud-based POS" />
         <link rel="canonical" href="https://www.cloudnetsoftwares.com/products/nightpulse" />
-        <meta property="og:title" content="NightPulse POS - Bar, Club & Karaoke Management System" />
-        <meta property="og:description" content="Professional cloud-based POS system designed for bars, clubs, and karaoke venues to streamline operations and maximize profitability." />
+        <meta property="og:title" content="NightPulse POS - Cafe, Restaurant, Bar, Club & Karaoke Management System" />
+        <meta property="og:description" content="Professional cloud-based POS system for cafes, restaurants of any size - including multi-location chains - bars, clubs, and karaoke venues, built to streamline operations and maximize profitability." />
         <meta property="og:url" content="https://www.cloudnetsoftwares.com/products/nightpulse" />
       </Helmet>
       {/* Hero Section */}
       <section className="pt-32 pb-20 bg-gradient-to-br from-orange-50 via-white to-orange-50">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              NightPulse <span className="text-primary">POS Systems</span>
-            </h1>
-            <p className="text-2xl text-gray-700 mb-4 font-semibold">
-              The Complete Cloud-Based POS for Bars, Clubs & Karaoke (Kayotee) Venues
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="text-center lg:text-left">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                NightPulse <span className="text-primary">POS Systems</span>
+              </h1>
+              <p className="text-2xl text-gray-700 mb-4 font-semibold">
+                The Complete Cloud-Based POS for Cafes, Restaurants, Bars, Clubs & Karaoke (Kayotee) Venues
+              </p>
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                From a small neighborhood cafe to a multi-location restaurant chain, and from bars and clubs to
+                karaoke (Kayotee) venues, NightPulse scales with your business. Manage billing, inventory, tables
+                or rooms, staff, and analytics all in one place, with dedicated Manager and POS apps for quick actions.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a
+                  href={NIGHTPULSE_PLAY_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+                >
+                  <PlayCircle size={22} />
+                  <span>
+                    Get it on <span className="font-bold">Google Play</span>
+                  </span>
+                </a>
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+                >
+                  Schedule a Demo
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <img
+                src={restaurantImage}
+                alt="Restaurant dining floor managed by NightPulse POS"
+                className="col-span-2 w-full h-56 md:h-64 object-cover rounded-2xl shadow-xl"
+              />
+              <img
+                src={cafeImage}
+                alt="Cafe using NightPulse POS for billing and orders"
+                className="w-full h-36 md:h-44 object-cover rounded-2xl shadow-xl"
+              />
+              <img
+                src={nightclubImage}
+                alt="Nightclub with vibrant lighting also managed by NightPulse POS"
+                className="w-full h-36 md:h-44 object-cover rounded-2xl shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Photo Gallery Strip */}
+      <section className="py-14 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">One POS for Every Kind of Food, Drink & Entertainment Business</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              NightPulse isn't just for nightlife - cafes, single-outlet restaurants, and large multi-location
+              restaurant chains run on it too, alongside bars, clubs, and karaoke (Kayotee) rooms.
             </p>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Streamline operations, manage Kayotee commissions, and drive revenue growth with CloudNet's comprehensive
-              nightlife POS platform. Manage billing, inventory, rooms, staff, and analytics all in one place,
-              with dedicated Manager and POS apps for quick actions.
-            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {[
+              { src: cafeImage, label: 'Cafes' },
+              { src: restaurantImage, label: 'Restaurants' },
+              { src: restaurantChainImage, label: 'Multi-Location Chains' },
+              { src: barCounterImage, label: 'Bars & Lounges' },
+              { src: karaokeMicImage, label: 'Karaoke (Kayotee) Rooms' },
+              { src: crowdImage, label: 'Clubs & Live Events' }
+            ].map((item, index) => (
+              <div key={index} className="relative rounded-xl overflow-hidden shadow-lg group">
+                <img
+                  src={item.src}
+                  alt={item.label}
+                  className="w-full h-40 md:h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                <span className="absolute bottom-3 left-3 text-white font-semibold text-sm md:text-base">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CloudNet AI Engine Integration Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative">
+          <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div>
+              <img
+                src={aiEngineBadge}
+                alt="CloudNet AI Engine"
+                className="w-56 md:w-72 mx-auto lg:mx-0 drop-shadow-2xl"
+              />
+            </div>
+            <div className="text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 bg-primary text-white text-sm font-bold uppercase tracking-wide px-4 py-1.5 rounded-full mb-5">
+                <Sparkles size={16} />
+                Coming Soon
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                NightPulse Connects with <span className="text-primary">CloudNet AI Engine</span>
+              </h2>
+              <p className="text-gray-300 text-lg leading-relaxed mb-8">
+                CloudNet AI Engine is our unified intelligence layer built to connect with any CloudNet product,
+                including NightPulse. Once live, it plugs directly into your venue's data - sales, inventory,
+                rooms, and Kayotee performance - to give you smarter, faster, and more automated decision-making,
+                without changing how you already use NightPulse.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-5 text-left mb-8">
+                <div className="flex items-start gap-3">
+                  <LineChart className="text-primary flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">Predictive Sales Forecasting</h4>
+                    <p className="text-gray-400 text-sm">Anticipate busy nights and staff, stock, and rooms accordingly.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <BrainCircuit className="text-primary flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">Smart Inventory Reordering</h4>
+                    <p className="text-gray-400 text-sm">AI recommends restock levels for drinks and bar items automatically.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <ShieldAlert className="text-primary flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">Anomaly & Commission Checks</h4>
+                    <p className="text-gray-400 text-sm">Flags unusual discounts, voids, or Kayotee commission patterns.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <MessagesSquare className="text-primary flex-shrink-0 mt-1" size={22} />
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">AI Chat Insights</h4>
+                    <p className="text-gray-400 text-sm">Ask questions about your reports and get instant, plain-language answers.</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-gray-400 text-sm">
+                Because CloudNet AI Engine is built as a shared layer across our product line, every business using
+                NightPulse, Restaurant POS, ERP Solution, or Access Gate System will be able to turn it on for their
+                venue as soon as it launches.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -499,7 +646,7 @@ const NightPulse = () => {
             Ready to Transform Your Venue?
           </h2>
           <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
-            Join venues using NightPulse POS to streamline operations, manage Kayotee commissions, and enhance customer satisfaction.
+            Join cafes, restaurants, multi-location chains, bars, clubs, and karaoke venues using NightPulse POS to streamline operations, manage Kayotee commissions, and enhance customer satisfaction.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -508,6 +655,15 @@ const NightPulse = () => {
               <span>Schedule Your Demo</span>
               <ArrowRight size={20} />
             </button>
+            <a
+              href={NIGHTPULSE_PLAY_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-black hover:bg-gray-800 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 inline-flex items-center justify-center gap-2"
+            >
+              <PlayCircle size={20} />
+              <span>Download on Google Play</span>
+            </a>
             <Link to="/products" className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold py-4 px-8 rounded-lg transition-all duration-300">
               Explore Other Products
             </Link>
@@ -523,7 +679,7 @@ const NightPulse = () => {
               Why Choose NightPulse <span className="text-primary">POS?</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Purpose-built for bars, clubs, and karaoke venues with all the features you need
+              Purpose-built for cafes, restaurants, bars, clubs, and karaoke venues - from single small outlets to large multi-location chains - with all the features you need
             </p>
           </div>
 

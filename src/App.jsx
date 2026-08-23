@@ -18,6 +18,10 @@ import KioskMachine from './pages/KioskMachine'
 import JobsVacancy from './pages/JobsVacancy'
 import FreelancerResellerProgram from './pages/FreelancerResellerProgram'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import AccessGateSystem from './pages/AccessGateSystem'
+import FoodCostCalculator from './pages/FoodCostCalculator'
+import ProfitLossCalculator from './pages/ProfitLossCalculator'
+import QuickLinksWidget from './components/QuickLinksWidget'
 
 function App() {
   return (
@@ -41,11 +45,15 @@ function App() {
               <Route path="/products/printer" element={<PrinterCatalog />} />
               <Route path="/products/pos-machine" element={<POSMachine />} />
               <Route path="/products/kiosk-machine" element={<KioskMachine />} />
+              <Route path="/products/access-gate-system" element={<AccessGateSystem />} />
+              <Route path="/resources/food-cost-calculator" element={<FoodCostCalculator />} />
+              <Route path="/resources/profit-loss-calculator" element={<ProfitLossCalculator />} />
               <Route path="/freelancer-reseller-program" element={<FreelancerResellerProgram />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             </Routes>
           </main>
           <Footer />
+          <QuickLinksWidget />
         </div>
       </Router>
     </HelmetProvider>

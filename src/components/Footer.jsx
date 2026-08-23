@@ -1,9 +1,50 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Github } from 'lucide-react'
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Github, Eye, UserCheck, RefreshCw } from 'lucide-react'
 import logoWhite from '../assets/img/logowhite.png'
+
+const COUNTER_NS = 'cloudnetsoftwares-www'
+const COUNTER_BASE = 'https://api.counterapi.dev/v1'
+const VISITED_KEY = 'cn_v'
+
+function useVisitorCounter() {
+  const [stats, setStats] = useState({ total: null, unique: null, repeat: null })
+
+  useEffect(() => {
+    const isRepeat = !!localStorage.getItem(VISITED_KEY)
+    if (!isRepeat) localStorage.setItem(VISITED_KEY, '1')
+
+    const typeKey = isRepeat ? 'repeat' : 'unique'
+    const otherKey = isRepeat ? 'unique' : 'repeat'
+
+    Promise.all([
+      fetch(`${COUNTER_BASE}/${COUNTER_NS}/total/up`).then(r => r.json()),
+      fetch(`${COUNTER_BASE}/${COUNTER_NS}/${typeKey}/up`).then(r => r.json()),
+      fetch(`${COUNTER_BASE}/${COUNTER_NS}/${otherKey}`).then(r => r.json()),
+    ]).then(([totalData, typeData, otherData]) => {
+      const get = d => d?.count ?? d?.value ?? null
+      setStats({
+        total: get(totalData),
+        unique: isRepeat ? get(otherData) : get(typeData),
+        repeat: isRepeat ? get(typeData) : get(otherData),
+      })
+    }).catch(() => {})
+  }, [])
+
+  return stats
+}
+
+function fmtCount(n) {
+  if (n === null || n === undefined) return '—'
+  if (n >= 1000000) return `${(n / 1000000).toFixed(1)}M`
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`
+  return String(n)
+}
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const stats = useVisitorCounter()
+  const hasStats = stats.total !== null
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -70,7 +111,46 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-gray-400">
+        {/* Visitor Counter */}
+        <div className="border-t border-gray-800 mt-8 pt-6">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                <Eye size={15} className="text-primary" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 leading-none mb-0.5">Total Visitors</p>
+                <p className="text-lg font-bold text-white leading-none">
+                  {hasStats ? fmtCount(stats.total) : <span className="text-gray-600 text-sm">loading…</span>}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                <UserCheck size={15} className="text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 leading-none mb-0.5">Unique Visitors</p>
+                <p className="text-lg font-bold text-white leading-none">
+                  {hasStats ? fmtCount(stats.unique) : <span className="text-gray-600 text-sm">loading…</span>}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
+                <RefreshCw size={15} className="text-blue-400" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 leading-none mb-0.5">Returning Visitors</p>
+                <p className="text-lg font-bold text-white leading-none">
+                  {hasStats ? fmtCount(stats.repeat) : <span className="text-gray-600 text-sm">loading…</span>}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-800 mt-6 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-gray-400">
           <p>&copy; {currentYear} CloudNet Softwares. All rights reserved.</p>
           <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
         </div>

@@ -1,9 +1,13 @@
 import { Helmet } from 'react-helmet-async'
 import { useState } from 'react'
-import { ChevronDown, Briefcase, TrendingUp, Users, Award, Code2, Clock, Target } from 'lucide-react'
+import { ChevronDown, Briefcase, TrendingUp, Users, Award, Code2, Clock, Target, PlayCircle } from 'lucide-react'
 import storehubImg1 from '../assets/img/storehub/store (1).png'
 import storehubImg2 from '../assets/img/storehub/store (2).png'
 import storehubImg3 from '../assets/img/storehub/store (3).png'
+
+const nightclubImg = 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&h=600&q=80'
+const barCounterImg = 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&h=600&q=80'
+const karaokeMicImg = 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&h=600&q=80'
 
 const CaseStudies = () => {
   const [expandedCase, setExpandedCase] = useState(null)
@@ -185,6 +189,34 @@ const CaseStudies = () => {
         role: 'Operations Director, BlueWave Hospitality Group'
       },
       image: 'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=800&h=600&fit=crop'
+    },
+    {
+      id: 8,
+      category: 'hospitality',
+      title: 'NightPulse POS Rollout',
+      subtitle: 'Bar, Club & Karaoke (Kayotee) Venue Management',
+      client: 'Pulse Nightlife Group',
+      industry: 'Bars, Clubs & Karaoke',
+      duration: '3 months',
+      challenge: 'A multi-venue nightlife operator running bars, a club, and karaoke (Kayotee) rooms had no unified billing, room/table management, or way to track Kayotee commissions accurately. Peak-hour service was slow and inventory losses on drinks went unnoticed for weeks at a time.',
+      solution: 'Deployed NightPulse POS with cloud billing, real-time drinks inventory, digital room/table management, and automated Kayotee commission tracking with daily settlement. Rolled out the dedicated Manager and POS mobile apps so staff could take quick actions and owners could monitor every venue remotely, including on the NightPulse Android app.',
+      results: [
+        { metric: '45%', description: 'Faster peak-hour billing' },
+        { metric: '30%', description: 'Reduction in stock discrepancies' },
+        { metric: '100%', description: 'Accurate Kayotee commission settlement' },
+        { metric: '3', description: 'Venues managed from one dashboard' }
+      ],
+      technologies: ['NightPulse POS', 'Kayotee Commission Management', 'Room & Table Management', 'Manager & POS Apps', 'Cloud Reporting'],
+      testimonial: {
+        text: 'NightPulse gave us control we never had before - billing, inventory, and Kayotee commissions all in one place. Our managers can check every venue from their phone, even on a busy Friday night.',
+        author: 'Somchai T.',
+        role: 'Owner, Pulse Nightlife Group'
+      },
+      images: [nightclubImg, barCounterImg, karaokeMicImg],
+      appLink: {
+        label: 'Download NightPulse POS App',
+        url: 'https://play.google.com/store/apps/details?id=com.cloudnet.nightpulse&hl=en'
+      }
     }
   ]
 
@@ -395,6 +427,19 @@ const CaseStudies = () => {
                             <Users className="text-orange-600" size={32} />
                           </div>
                         </div>
+
+                        {/* App Download Link */}
+                        {caseStudy.appLink && (
+                          <a
+                            href={caseStudy.appLink.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-black hover:bg-gray-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300"
+                          >
+                            <PlayCircle size={20} />
+                            <span>{caseStudy.appLink.label}</span>
+                          </a>
+                        )}
                       </div>
                     )}
                   </div>

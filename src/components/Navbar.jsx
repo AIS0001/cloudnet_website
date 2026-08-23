@@ -8,6 +8,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
   const [isProductsOpen, setIsProductsOpen] = useState(false)
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false)
+  const [isMobileResourcesOpen, setIsMobileResourcesOpen] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
@@ -25,6 +26,11 @@ const Navbar = () => {
     { path: '/portfolio', label: 'Case Studies' }
   ]
 
+  const resourcesSubmenu = [
+    { path: '/resources/food-cost-calculator', label: 'Food Cost Calculator' },
+    { path: '/resources/profit-loss-calculator', label: 'Profit & Loss Calculator' },
+  ]
+
   const productSubmenu = [
     { path: '/products/restaurant-pos', label: 'Restaurant POS' },
     { path: '/products/nightpulse', label: 'NightPulse' },
@@ -33,6 +39,7 @@ const Navbar = () => {
     { path: '/products/printer', label: 'Printer' },
     { path: '/products/pos-machine', label: 'POS Machine' },
     { path: '/products/kiosk-machine', label: 'Kiosk Machine' },
+    { path: '/products/access-gate-system', label: 'Access Gate System' },
     { path: '/products/barcode-scanner', label: 'Barcode Scanner' }
   ]
 
@@ -79,6 +86,31 @@ const Navbar = () => {
               </button>
               <div className="absolute left-0 mt-0 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2 z-50">
                 {productSubmenu.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`block px-4 py-3 hover:bg-orange-50 hover:text-primary transition-colors ${
+                      location.pathname === item.path ? 'text-primary font-semibold' : 'text-gray-700'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Resources Dropdown */}
+            <div className="relative group">
+              <button className={`font-medium transition-colors duration-300 flex items-center space-x-1 ${
+                location.pathname.includes('/resources')
+                  ? 'text-primary'
+                  : 'text-white hover:text-primary'
+              }`}>
+                <span>Resources</span>
+                <ChevronDown size={18} className="group-hover:rotate-180 transition-transform" />
+              </button>
+              <div className="absolute left-0 mt-0 w-56 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 py-2 z-50">
+                {resourcesSubmenu.map((item) => (
                   <Link
                     key={item.path}
                     to={item.path}
@@ -167,6 +199,31 @@ const Navbar = () => {
                       location.pathname === item.path
                         ? 'text-primary font-semibold'
                         : 'text-gray-700 hover:text-primary'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Mobile Resources Menu */}
+            <button
+              onClick={() => setIsMobileResourcesOpen(!isMobileResourcesOpen)}
+              className="w-full text-left py-3 px-4 text-gray-700 hover:text-primary hover:bg-gray-50 flex items-center justify-between font-medium"
+            >
+              <span>Resources</span>
+              <ChevronDown size={18} className={`transform transition-transform ${isMobileResourcesOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {isMobileResourcesOpen && (
+              <div className="bg-orange-50">
+                {resourcesSubmenu.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={() => { setIsOpen(false); setIsMobileResourcesOpen(false) }}
+                    className={`block py-3 px-8 ${
+                      location.pathname === item.path ? 'text-primary font-semibold' : 'text-gray-700 hover:text-primary'
                     }`}
                   >
                     {item.label}

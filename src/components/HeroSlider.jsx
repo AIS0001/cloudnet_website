@@ -1,7 +1,16 @@
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
+import aiEngineBanner from '../assets/img/cloudnet-ai-engine-banner.webp'
 
 const HERO_SLIDES = [
+  {
+    title: 'CloudNet AI Engine',
+    subtitle: 'One Smart Engine for All Your Software',
+    gradient: 'from-slate-900 to-slate-700',
+    image: aiEngineBanner,
+    comingSoon: true
+  },
   {
     title: 'VPS Hosting Solutions',
     subtitle: 'Fast, Secure, and Scalable Infrastructure',
@@ -50,6 +59,27 @@ const HERO_SLIDES = [
     description: 'Grow visibility and leads through SEO, paid campaigns, social media strategy, and conversion-focused digital marketing.',
     gradient: 'from-red-700 to-orange-500',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+  },
+  {
+    title: 'GT81EZ Pro Mobile Terminal POS',
+    subtitle: 'Handheld POS, Anywhere You Do Business',
+    description: 'A compact mobile terminal with built-in printer, Android 13, 4G/WiFi, and long-lasting battery - perfect for order taking and billing on the move.',
+    gradient: 'from-orange-700 to-amber-600',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+  },
+  {
+    title: 'GT90EZ Pro Tablet POS',
+    subtitle: 'Complete POS Solution for Your Business',
+    description: 'An 8" Android 13 tablet POS with built-in printer, NFC payments, and 4G/WiFi connectivity - everything you need for fast, smart checkout.',
+    gradient: 'from-violet-700 to-blue-600',
+    image: 'https://images.unsplash.com/photo-1556742111-a301076d9d18?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
+  },
+  {
+    title: 'Smart Gate Access System',
+    subtitle: 'Secure. Smart. Connected.',
+    description: 'Cloud-based centralised access control with face recognition, RFID card access, and QR code entry - manage every gate from one dashboard, anywhere.',
+    gradient: 'from-teal-700 to-emerald-500',
+    image: 'https://images.unsplash.com/photo-1565514020179-026b92b2d70b?auto=format&fit=crop&w=1920&h=1080&blend=000000&bm=multiply&balph=40'
   }
 ]
 
@@ -80,38 +110,67 @@ const HeroSlider = () => {
             index === currentSlide ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          {/* Background Image with Overlay */}
-          <div className="absolute inset-0">
-            <img
-              src={slide.image}
-              alt={slide.title}
-              className="w-full h-full object-cover brightness-75"
-            />
-            <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient} opacity-20`}></div>
-          </div>
-
-          {/* Content */}
-          <div className="relative h-full flex items-center justify-center text-center px-4">
-            <div className="max-w-4xl">
-              <h2 className="text-white text-xl md:text-2xl font-semibold mb-4 animate-fade-in">
-                {slide.subtitle}
-              </h2>
-              <h1 className="text-white text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
-                {slide.title}
-              </h1>
-              <p className="text-white text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-slide-up">
-                {slide.description}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
-                <button className="bg-white text-primary hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-xl">
-                  Get Started
-                </button>
-                <button className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold py-4 px-8 rounded-lg transition-all duration-300">
-                  Learn More
-                </button>
+          {slide.comingSoon ? (
+            <>
+              {/* Full infographic banner, shown uncropped */}
+              <div className="absolute inset-0 bg-slate-950 flex items-center justify-center">
+                <img
+                  src={slide.image}
+                  alt="CloudNet AI Engine - one smart engine for all your software, coming soon"
+                  className="w-full h-full object-contain"
+                />
               </div>
-            </div>
-          </div>
+
+              {/* Coming Soon ribbon + CTA, kept out of the infographic's own content */}
+              <div className="relative h-full flex flex-col items-center justify-between py-8 px-4">
+                <span className="inline-flex items-center gap-2 bg-primary text-white text-sm md:text-base font-bold uppercase tracking-wide px-5 py-2 rounded-full shadow-xl animate-fade-in">
+                  <Sparkles size={18} />
+                  Coming Soon
+                </span>
+                <Link
+                  to="/contact"
+                  className="bg-white text-primary hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-xl animate-slide-up"
+                >
+                  Get Notified When It Launches
+                </Link>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Background Image with Overlay */}
+              <div className="absolute inset-0">
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className="w-full h-full object-cover brightness-75"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient} opacity-20`}></div>
+              </div>
+
+              {/* Content */}
+              <div className="relative h-full flex items-center justify-center text-center px-4">
+                <div className="max-w-4xl">
+                  <h2 className="text-white text-xl md:text-2xl font-semibold mb-4 animate-fade-in">
+                    {slide.subtitle}
+                  </h2>
+                  <h1 className="text-white text-5xl md:text-7xl font-bold mb-6 animate-slide-up">
+                    {slide.title}
+                  </h1>
+                  <p className="text-white text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-slide-up">
+                    {slide.description}
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up">
+                    <button className="bg-white text-primary hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-xl">
+                      Get Started
+                    </button>
+                    <button className="border-2 border-white text-white hover:bg-white hover:text-primary font-semibold py-4 px-8 rounded-lg transition-all duration-300">
+                      Learn More
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       ))}
 
