@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Github, Eye, UserCheck, RefreshCw } from 'lucide-react'
+import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook, Github, Eye, UserCheck, RefreshCw, Lock } from 'lucide-react'
 import logoWhite from '../assets/img/logowhite.png'
 
 // CounterAPI v1 (used previously) was permanently discontinued (HTTP 410).
@@ -170,7 +170,13 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-6 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-gray-400">
           <p>&copy; {currentYear} CloudNet Softwares. All rights reserved.</p>
-          <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+          <div className="flex items-center gap-6">
+            <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/staff/login" className="inline-flex items-center gap-1.5 hover:text-primary transition-colors">
+              <Lock size={14} />
+              <span>Staff Login</span>
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

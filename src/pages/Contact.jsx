@@ -1,31 +1,22 @@
 import { Helmet } from 'react-helmet-async'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Mail, Phone, MapPin, Send, Clock, CheckCircle2, Navigation, MessageCircle } from 'lucide-react'
 import cloudnetQR from '../assets/img/cloudnetid.jpeg'
-import emailjs from '@emailjs/browser'
 import ScrollReveal from '../components/animations/ScrollReveal'
+import { apiFetch } from '../lib/apiClient'
 
 const Contact = () => {
-  const emailJsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || import.meta.env.VITE_EMAILJS_PUBLICKEY || ''
-  const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || ''
-  const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || ''
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     subject: '',
-    message: ''
+    message: '',
+    website: '' // honeypot field — must stay empty; bots tend to fill every input
   })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (emailJsPublicKey) {
-      emailjs.init(emailJsPublicKey)
-    }
-  }, [emailJsPublicKey])
 
   const handleChange = (e) => {
     setFormData({
@@ -38,68 +29,20 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!emailJsPublicKey || !emailJsServiceId || !emailJsTemplateId) {
-      setError('Email form is not configured. Please set VITE_EMAILJS_PUBLIC_KEY, VITE_EMAILJS_SERVICE_ID, and VITE_EMAILJS_TEMPLATE_ID in your environment file.')
-      return
-    }
-
-    if (!emailJsServiceId.startsWith('service_')) {
-      setError('Invalid EmailJS Service ID format. It should look like service_xxxxx.')
-      return
-    }
-
-    if (!emailJsTemplateId.startsWith('template_')) {
-      setError('Invalid EmailJS Template ID format. It should look like template_xxxxx.')
-      return
-    }
-
     setLoading(true)
     setError('')
 
     try {
-      const templateParams = {
-        to_email: 'info@cloudnetsoftwares.com',
-        from_name: formData.name,
-        from_email: formData.email,
-        phone: formData.phone || 'Not provided',
-        subject: formData.subject,
-        message: formData.message
-      }
+      await apiFetch('/contact', { method: 'POST', body: formData })
 
-      const response = await emailjs.send(
-        emailJsServiceId,
-        emailJsTemplateId,
-        templateParams
-      )
-
-      if (response.status === 200) {
-        setSubmitted(true)
-        setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
-        setTimeout(() => {
-          setSubmitted(false)
-        }, 3000)
-      }
+      setSubmitted(true)
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '', website: '' })
+      setTimeout(() => {
+        setSubmitted(false)
+      }, 3000)
     } catch (err) {
-      console.error('Email send error:', err)
-
-      if (err?.status === 400 && typeof err?.text === 'string') {
-        if (err.text.toLowerCase().includes('service id not found')) {
-          setError('EmailJS Service ID was not found. Please check VITE_EMAILJS_SERVICE_ID in your environment file.')
-          return
-        }
-
-        if (err.text.toLowerCase().includes('template id not found')) {
-          setError('EmailJS Template ID was not found. Please check VITE_EMAILJS_TEMPLATE_ID in your environment file.')
-          return
-        }
-
-        if (err.text.toLowerCase().includes('public key is invalid')) {
-          setError('EmailJS Public Key is invalid. Please check VITE_EMAILJS_PUBLIC_KEY in your environment file.')
-          return
-        }
-      }
-
-      setError('Failed to send message. Please try again or contact us directly.')
+      console.error('Contact form send error:', err)
+      setError(err.message || 'Failed to send message. Please try again or contact us directly.')
     } finally {
       setLoading(false)
     }
@@ -195,6 +138,16 @@ const Contact = () => {
                     </div>
                   )}
                   <form onSubmit={handleSubmit} className="space-y-6">
+                  <input
+                    type="text"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="absolute left-[-9999px] w-px h-px opacity-0 overflow-hidden"
+                  />
                   <div>
                     <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
                       Full Name *

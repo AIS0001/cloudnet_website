@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Local frontend env (VITE_COUNTERAPI_KEY may hold a real key here) — .env.example and
+# .env.production stay tracked since they carry no secrets.
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

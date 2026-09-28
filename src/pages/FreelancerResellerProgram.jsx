@@ -1,13 +1,9 @@
 import { Helmet } from 'react-helmet-async'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { ChevronDown, CheckCircle2, DollarSign, Send, UserPlus, Users, Briefcase } from 'lucide-react'
-import emailjs from '@emailjs/browser'
+import { apiFetch } from '../lib/apiClient'
 
 const FreelancerResellerProgram = () => {
-  const emailJsPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || import.meta.env.VITE_EMAILJS_PUBLICKEY || ''
-  const emailJsServiceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || ''
-  const emailJsTemplateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || ''
-
   const [activeTab, setActiveTab] = useState('restaurant-pos')
   const [openFaq, setOpenFaq] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -25,14 +21,9 @@ const FreelancerResellerProgram = () => {
     monthlyLeads: '',
     message: '',
     productsInterested: [],
-    agreeTerms: false
+    agreeTerms: false,
+    website: '' // honeypot field — must stay empty; bots tend to fill every input
   })
-
-  useEffect(() => {
-    if (emailJsPublicKey) {
-      emailjs.init(emailJsPublicKey)
-    }
-  }, [emailJsPublicKey])
 
   const commissionPlans = useMemo(() => ([
     {
@@ -177,21 +168,6 @@ const FreelancerResellerProgram = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!emailJsPublicKey || !emailJsServiceId || !emailJsTemplateId) {
-      setError('Email form is not configured. Please set VITE_EMAILJS_PUBLIC_KEY, VITE_EMAILJS_SERVICE_ID, and VITE_EMAILJS_TEMPLATE_ID in your environment file.')
-      return
-    }
-
-    if (!emailJsServiceId.startsWith('service_')) {
-      setError('Invalid EmailJS Service ID format. It should look like service_xxxxx.')
-      return
-    }
-
-    if (!emailJsTemplateId.startsWith('template_')) {
-      setError('Invalid EmailJS Template ID format. It should look like template_xxxxx.')
-      return
-    }
-
     if (!formData.agreeTerms) {
       setError('Please accept the program terms to continue.')
       return
@@ -206,64 +182,26 @@ const FreelancerResellerProgram = () => {
     setError('')
 
     try {
-      const templateParams = {
-        to_email: 'info@cloudnetsoftwares.com',
-        subject: 'New Freelancer Reseller Program Registration',
-        from_name: formData.fullName,
-        from_email: formData.email,
-        phone: formData.phone,
-        city: formData.city,
-        country: formData.country,
-        freelancer_type: formData.freelancerType,
-        sales_channels: formData.salesChannels,
-        monthly_leads: formData.monthlyLeads,
-        products_interested: formData.productsInterested.join(', '),
-        message: formData.message || 'No additional note provided.'
-      }
+      await apiFetch('/reseller-application', { method: 'POST', body: formData })
 
-      const response = await emailjs.send(
-        emailJsServiceId,
-        emailJsTemplateId,
-        templateParams
-      )
-
-      if (response.status === 200) {
-        setSubmitted(true)
-        setFormData({
-          fullName: '',
-          email: '',
-          phone: '',
-          city: '',
-          country: '',
-          freelancerType: '',
-          salesChannels: '',
-          monthlyLeads: '',
-          message: '',
-          productsInterested: [],
-          agreeTerms: false
-        })
-      }
+      setSubmitted(true)
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        city: '',
+        country: '',
+        freelancerType: '',
+        salesChannels: '',
+        monthlyLeads: '',
+        message: '',
+        productsInterested: [],
+        agreeTerms: false,
+        website: ''
+      })
     } catch (err) {
       console.error('Freelancer program submission error:', err)
-
-      if (err?.status === 400 && typeof err?.text === 'string') {
-        if (err.text.toLowerCase().includes('service id not found')) {
-          setError('EmailJS Service ID was not found. Please check VITE_EMAILJS_SERVICE_ID in your environment file.')
-          return
-        }
-
-        if (err.text.toLowerCase().includes('template id not found')) {
-          setError('EmailJS Template ID was not found. Please check VITE_EMAILJS_TEMPLATE_ID in your environment file.')
-          return
-        }
-
-        if (err.text.toLowerCase().includes('public key is invalid')) {
-          setError('EmailJS Public Key is invalid. Please check VITE_EMAILJS_PUBLIC_KEY in your environment file.')
-          return
-        }
-      }
-
-      setError('Failed to submit your registration. Please try again in a few minutes.')
+      setError(err.message || 'Failed to submit your registration. Please try again in a few minutes.')
     } finally {
       setLoading(false)
     }
@@ -437,6 +375,16 @@ const FreelancerResellerProgram = () => {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    <input
+                      type="text"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="absolute left-[-9999px] w-px h-px opacity-0 overflow-hidden"
+                    />
                     {error && (
                       <div className="bg-red-50 border-2 border-red-500 rounded-xl p-4">
                         <p className="text-red-700">{error}</p>

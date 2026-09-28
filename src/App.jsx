@@ -9,6 +9,8 @@ import PageTransition from './components/animations/PageTransition'
 import Home from './pages/Home'
 import QuickLinksWidget from './components/QuickLinksWidget'
 import MusicToggle from './components/MusicToggle'
+import { StaffAuthProvider } from './context/StaffAuthContext'
+import ProtectedStaffRoute from './components/staff/ProtectedStaffRoute'
 
 // Route-level code splitting: only the homepage (and its animation
 // components) load eagerly. Every other page is fetched on demand,
@@ -36,6 +38,15 @@ const ProfitLossCalculator = lazy(() => import('./pages/ProfitLossCalculator'))
 const CloudScreen = lazy(() => import('./pages/CloudScreen'))
 const ClarioAI = lazy(() => import('./pages/ClarioAI'))
 const CloudEye = lazy(() => import('./pages/CloudEye'))
+
+const StaffLogin = lazy(() => import('./pages/staff/StaffLogin'))
+const StaffDashboard = lazy(() => import('./pages/staff/StaffDashboard'))
+const CustomerForm = lazy(() => import('./pages/staff/CustomerForm'))
+const CustomersList = lazy(() => import('./pages/staff/CustomersList'))
+const PlaceOrder = lazy(() => import('./pages/staff/PlaceOrder'))
+const OrdersList = lazy(() => import('./pages/staff/OrdersList'))
+const TeamManagement = lazy(() => import('./pages/staff/TeamManagement'))
+const ChangePassword = lazy(() => import('./pages/staff/ChangePassword'))
 
 const RouteFallback = () => (
   <div className="min-h-[60vh] flex items-center justify-center">
@@ -76,28 +87,50 @@ const AnimatedRoutes = () => {
         <Route path="/resources/profit-loss-calculator" element={page(<ProfitLossCalculator />)} />
         <Route path="/freelancer-reseller-program" element={page(<FreelancerResellerProgram />)} />
         <Route path="/privacy-policy" element={page(<PrivacyPolicy />)} />
+
+        <Route path="/staff/login" element={page(<StaffLogin />)} />
+        <Route path="/staff" element={page(<ProtectedStaffRoute><StaffDashboard /></ProtectedStaffRoute>)} />
+        <Route path="/staff/customers/new" element={page(<ProtectedStaffRoute><CustomerForm /></ProtectedStaffRoute>)} />
+        <Route path="/staff/customers" element={page(<ProtectedStaffRoute><CustomersList /></ProtectedStaffRoute>)} />
+        <Route path="/staff/orders/new" element={page(<ProtectedStaffRoute><PlaceOrder /></ProtectedStaffRoute>)} />
+        <Route path="/staff/orders" element={page(<ProtectedStaffRoute><OrdersList /></ProtectedStaffRoute>)} />
+        <Route path="/staff/team" element={page(<ProtectedStaffRoute adminOnly><TeamManagement /></ProtectedStaffRoute>)} />
+        <Route path="/staff/change-password" element={page(<ProtectedStaffRoute><ChangePassword /></ProtectedStaffRoute>)} />
       </Routes>
     </AnimatePresence>
+  )
+}
+
+// The staff field app has its own top bar/nav (StaffLayout) — the public
+// marketing Navbar is `fixed` and overlaps it, so it's hidden on /staff/*.
+const AppChrome = () => {
+  const location = useLocation()
+  const isStaffArea = location.pathname.startsWith('/staff')
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <ScrollToTop />
+      {!isStaffArea && <Navbar />}
+      <main className="flex-grow">
+        <Suspense fallback={<RouteFallback />}>
+          <AnimatedRoutes />
+        </Suspense>
+      </main>
+      {!isStaffArea && <Footer />}
+      {!isStaffArea && <QuickLinksWidget />}
+      {!isStaffArea && <MusicToggle />}
+    </div>
   )
 }
 
 function App() {
   return (
     <HelmetProvider>
-      <Router>
-        <div className="min-h-screen flex flex-col">
-          <ScrollToTop />
-          <Navbar />
-          <main className="flex-grow">
-            <Suspense fallback={<RouteFallback />}>
-              <AnimatedRoutes />
-            </Suspense>
-          </main>
-          <Footer />
-          <QuickLinksWidget />
-          <MusicToggle />
-        </div>
-      </Router>
+      <StaffAuthProvider>
+        <Router>
+          <AppChrome />
+        </Router>
+      </StaffAuthProvider>
     </HelmetProvider>
   )
 }
