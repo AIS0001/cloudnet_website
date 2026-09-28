@@ -13,6 +13,7 @@ const SECTIONS = [
     links: [
       { to: '/products/restaurant-pos', label: 'Restaurant POS' },
       { to: '/products/nightpulse', label: 'NightPulse (Bar & Club)' },
+      { to: '/products/navigo', label: 'Navigo (Travel Agent)' },
       { to: '/products/erp-solution', label: 'ERP Solution' },
       { to: '/products/cloudscreen', label: 'CloudScreen' },
       { to: '/clario-ai', label: 'Clario AI' },

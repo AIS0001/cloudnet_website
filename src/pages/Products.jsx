@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, Zap, Cloud, TrendingUp, ArrowRight, Music2, Lock, CreditCard, Sparkles, MonitorPlay, ScanEye } from 'lucide-react'
+import { ShoppingCart, Plane, Zap, Cloud, TrendingUp, ArrowRight, Music2, Lock, CreditCard, Sparkles, MonitorPlay, ScanEye } from 'lucide-react'
 import ScrollReveal from '../components/animations/ScrollReveal'
 import CloudNetworkBackground from '../components/cloudnet/CloudNetworkBackground'
 
@@ -33,6 +33,20 @@ const Products = () => {
       ],
       link: "/products/nightpulse",
       color: "from-fuchsia-500 to-purple-700"
+    },
+    {
+      icon: <Plane size={60} />,
+      title: "Navigo",
+      description: "Travel agent software for agencies and tour operators - quotations, itineraries, bookings, payments and invoices for B2C, B2B, corporate and group customers.",
+      features: [
+        "Package builder & day-by-day itineraries",
+        "Quotation to booking in one click",
+        "B2B agent & corporate portals",
+        "Payments, expenses & net profit reports",
+        "Web back office & mobile app"
+      ],
+      link: "/products/navigo",
+      color: "from-blue-600 to-sky-500"
     },
     {
       icon: <Cloud size={60} />,
@@ -124,7 +138,7 @@ const Products = () => {
     <div>
       <Helmet>
         <title>Products - CloudNet Softwares | POS, ERP & Access Solutions</title>
-        <meta name="description" content="Explore CloudNet Softwares products including Restaurant POS, NightPulse, CloudNet ERP, Access Gate System, POS Machine, and Kiosk Machine - one connected ecosystem." />
+        <meta name="description" content="Explore CloudNet Softwares products including Restaurant POS, NightPulse, Navigo travel agent software, CloudNet ERP, Access Gate System, POS Machine, and Kiosk Machine - one connected ecosystem." />
         <meta name="keywords" content="POS system, ERP software, restaurant POS, NightPulse, access gate system, POS machine, kiosk machine, inventory management, business solutions, cloud-based" />
         <link rel="canonical" href="https://www.cloudnetsoftwares.com/products" />
         <meta property="og:title" content="Our Products - CloudNet Softwares" />

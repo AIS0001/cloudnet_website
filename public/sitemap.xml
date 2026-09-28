@@ -85,6 +85,14 @@
     <priority>0.95</priority>
   </url>
 
+  <!-- Navigo Travel Agent Software Product Page -->
+  <url>
+    <loc>https://www.cloudnetsoftwares.com/products/navigo</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
   <!-- CloudNet ERP Product Page -->
   <url>
     <loc>https://www.cloudnetsoftwares.com/products/erp-solution</loc>

@@ -48,6 +48,15 @@
     <meta name="bingbot" content="index, follow" />
     <link rel="canonical" href="https://www.cloudnetsoftwares.com/" />
     <link rel="alternate" hreflang="en" href="https://www.cloudnetsoftwares.com/" />
+
+    <!-- Google Translate: hide Google's own toolbar/tooltips; the site uses its own flag switcher -->
+    <style>
+      body > .skiptranslate, iframe.skiptranslate, .goog-te-banner-frame,
+      #goog-gt-tt, .goog-te-balloon-frame, .VIpgJd-ZVi9od-ORHb-OEVmcd, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf { display: none !important; }
+      body { top: 0 !important; position: static !important; }
+      .goog-text-highlight, font[style] { background: none !important; box-shadow: none !important; }
+      #google_translate_element { display: none; }
+    </style>
     
     <!-- Favicon & Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -60,7 +69,7 @@
     <!-- Preconnect to External Resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Sitemap & RSS -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -295,6 +304,7 @@
     src="https://www.facebook.com/tr?id=1122156239776359&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel (noscript) -->
+    <div id="google_translate_element"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

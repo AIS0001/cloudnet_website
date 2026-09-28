@@ -1,10 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { ShoppingCart, Music2, Database, Lock, MonitorSmartphone, CreditCard, Cloud, MonitorPlay, Sparkles, ScanEye } from 'lucide-react'
+import { ShoppingCart, Music2, Plane, Database, Lock, MonitorSmartphone, CreditCard, Cloud, MonitorPlay, Sparkles, ScanEye } from 'lucide-react'
 
 const PRODUCTS = [
   { icon: ShoppingCart, label: 'Restaurant POS', sub: 'Dine-in, KOT & billing', link: '/products/restaurant-pos' },
   { icon: Music2, label: 'NightPulse', sub: 'Cafes, bars, clubs & karaoke', link: '/products/nightpulse' },
+  { icon: Plane, label: 'Navigo', sub: 'Travel agent software', link: '/products/navigo' },
   { icon: Database, label: 'ERP Solution', sub: 'Business operations', link: '/products/erp-solution' },
   { icon: MonitorPlay, label: 'CloudScreen', sub: 'Digital advertising displays', link: '/products/cloudscreen' },
   { icon: ScanEye, label: 'CloudEye', sub: 'AI people & vehicle counting', link: '/products/cloudeye' },

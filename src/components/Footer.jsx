@@ -172,12 +172,6 @@ const Footer = () => {
           <p>&copy; {currentYear} CloudNet Softwares. All rights reserved.</p>
           <Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link>
         </div>
-        <p className="text-center text-gray-600 text-xs mt-4">
-          Background music: "Wallpaper" by Kevin MacLeod (
-          <a href="https://incompetech.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">incompetech.com</a>
-          ), licensed under{' '}
-          <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">CC BY 4.0</a>.
-        </p>
       </div>
     </footer>
   )

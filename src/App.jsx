@@ -21,6 +21,7 @@ const Contact = lazy(() => import('./pages/Contact'))
 const Products = lazy(() => import('./pages/Products'))
 const RestaurantPOS = lazy(() => import('./pages/RestaurantPOS'))
 const NightPulse = lazy(() => import('./pages/NightPulse'))
+const Navigo = lazy(() => import('./pages/Navigo'))
 const ERPSolution = lazy(() => import('./pages/ERPSolution'))
 const ThermalPaper = lazy(() => import('./pages/ThermalPaper'))
 const PrinterCatalog = lazy(() => import('./pages/PrinterCatalog'))
@@ -61,6 +62,7 @@ const AnimatedRoutes = () => {
         <Route path="/products" element={page(<Products />)} />
         <Route path="/products/restaurant-pos" element={page(<RestaurantPOS />)} />
         <Route path="/products/nightpulse" element={page(<NightPulse />)} />
+        <Route path="/products/navigo" element={page(<Navigo />)} />
         <Route path="/products/erp-solution" element={page(<ERPSolution />)} />
         <Route path="/products/thermal-paper" element={page(<ThermalPaper />)} />
         <Route path="/products/printer" element={page(<PrinterCatalog />)} />
