@@ -32,22 +32,24 @@
 # Browser caching
 <IfModule mod_expires.c>
   ExpiresActive On
-  
-  # Cache HTML files for 1 day
-  ExpiresByType text/html "access plus 1 day"
-  
+
+  # index.html must always be revalidated: it references content-hashed
+  # JS/CSS filenames (e.g. index-abc123.js), so a cached index.html points
+  # at a stale, possibly-deleted bundle after every deploy.
+  ExpiresByType text/html "access plus 0 seconds"
+
   # Cache CSS and JavaScript for 1 month
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType text/javascript "access plus 1 month"
-  
+
   # Cache images for 3 months
   ExpiresByType image/jpeg "access plus 3 months"
   ExpiresByType image/gif "access plus 3 months"
   ExpiresByType image/png "access plus 3 months"
   ExpiresByType image/webp "access plus 3 months"
   ExpiresByType image/svg+xml "access plus 3 months"
-  
+
   # Cache fonts for 1 year
   ExpiresByType font/ttf "access plus 1 year"
   ExpiresByType font/otf "access plus 1 year"
@@ -58,35 +60,38 @@
 
 # Set proper cache headers
 <IfModule mod_headers.c>
-  # Cache HTML for 1 day
+  # index.html: never cache (see mod_expires note above) - always fetch the
+  # latest shell so it references the current hashed JS/CSS bundle.
   <FilesMatch "\.html$">
-    Header set Cache-Control "max-age=86400, public"
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
   </FilesMatch>
-  
+
   # Cache CSS and JS for 1 month
   <FilesMatch "\.(css|js)$">
     Header set Cache-Control "max-age=2592000, public"
   </FilesMatch>
-  
+
   # Cache images for 3 months
   <FilesMatch "\.(jpg|jpeg|png|gif|ico|svg|webp)$">
     Header set Cache-Control "max-age=7884000, public"
   </FilesMatch>
-  
+
   # Cache fonts for 1 year
   <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
     Header set Cache-Control "max-age=31536000, public"
   </FilesMatch>
-  
+
   # Set X-UA-Compatible header
   Header set X-UA-Compatible "IE=edge"
-  
+
   # Prevent clickjacking
   Header set X-Frame-Options "SAMEORIGIN"
-  
+
   # Prevent MIME sniffing
   Header set X-Content-Type-Options "nosniff"
-  
+
   # Enable XSS protection
   Header set X-XSS-Protection "1; mode=block"
 </IfModule>
@@ -110,11 +115,11 @@ AddType 'text/html; charset=UTF-8' html
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  
+
   # Don't process actual files and folders
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  
+
   # Rewrite all other requests to index.html
   RewriteRule ^(.*)$ index.html [QSA,L]
 </IfModule>
@@ -123,7 +128,7 @@ AddType 'text/html; charset=UTF-8' html
 <IfModule mod_headers.c>
   # Referrer Policy
   Header set Referrer-Policy "strict-origin-when-cross-origin"
-  
+
   # Permissions Policy
   Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
