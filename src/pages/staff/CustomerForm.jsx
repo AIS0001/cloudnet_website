@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { CheckCircle2, Save } from 'lucide-react'
 import StaffLayout from '../../components/staff/StaffLayout'
 import { apiFetch } from '../../lib/apiClient'
+import ComboField from '../../components/staff/ComboField'
+import { BUSINESS_TYPES, SOFTWARE_OPTIONS } from '../../constants/customerOptions'
 
 const emptyForm = {
   name: '',
@@ -11,6 +13,8 @@ const emptyForm = {
   email: '',
   lineId: '',
   whatsapp: '',
+  businessType: '',
+  softwareInterested: '',
   notes: ''
 }
 
@@ -110,6 +114,14 @@ const CustomerForm = () => {
                 placeholder="+66-..."
               />
             </div>
+            <ComboField
+              label="Business Type" value={formData.businessType} options={BUSINESS_TYPES}
+              onChange={(v) => setFormData((f) => ({ ...f, businessType: v }))} placeholder="Enter business type"
+            />
+            <ComboField
+              label="Software Interested In" value={formData.softwareInterested} options={SOFTWARE_OPTIONS}
+              onChange={(v) => setFormData((f) => ({ ...f, softwareInterested: v }))} placeholder="Enter software name"
+            />
           </div>
           <div>
             <label className="block text-gray-700 font-medium mb-2 text-sm">Notes</label>

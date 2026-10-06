@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { LogOut, Users, ClipboardList, UserPlus, ShoppingCart, ShieldCheck, LayoutDashboard, KeyRound } from 'lucide-react'
+import { LogOut, Users, ClipboardList, UserPlus, ShoppingCart, ShieldCheck, LayoutDashboard, KeyRound, PhoneCall, BarChart3 } from 'lucide-react'
 import { useStaffAuth } from '../../context/StaffAuthContext'
 
-const StaffLayout = ({ title, children }) => {
+const StaffLayout = ({ title, action, children }) => {
   const { staff, logout } = useStaffAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+  const mobileNavRef = useRef(null)
+
+  // Bring the active tab into view when the mobile bar scrolls (admins have 8 tabs)
+  useEffect(() => {
+    mobileNavRef.current?.querySelector('[data-active="true"]')?.scrollIntoView({ inline: 'center', block: 'nearest' })
+  }, [location.pathname])
 
   const confirmLogout = () => {
     logout()
@@ -16,13 +22,13 @@ const StaffLayout = ({ title, children }) => {
 
   const navItems = [
     { to: '/staff', label: 'Dashboard', shortLabel: 'Home', icon: LayoutDashboard, end: true },
-    { to: '/staff/customers/new', label: 'Add Customer', shortLabel: 'Add', icon: UserPlus },
-    { to: '/staff/customers', label: 'Customers', shortLabel: 'List', icon: Users },
-    { to: '/staff/orders/new', label: 'Place Order', shortLabel: 'New', icon: ShoppingCart },
+    { to: '/staff/customers', label: 'Customers', shortLabel: 'Customers', icon: Users },
+    { to: '/staff/follow-ups', label: 'Follow Ups', shortLabel: 'Follow', icon: PhoneCall },
     { to: '/staff/orders', label: 'Orders', shortLabel: 'Orders', icon: ClipboardList }
   ]
 
   if (staff?.role === 'admin') {
+    navItems.push({ to: '/staff/reports/follow-ups', label: 'Reports', shortLabel: 'Reports', icon: BarChart3 })
     navItems.push({ to: '/staff/team', label: 'Team', shortLabel: 'Team', icon: ShieldCheck })
   }
 
@@ -73,19 +79,27 @@ const StaffLayout = ({ title, children }) => {
       </div>
 
       <div className="container mx-auto px-4 py-6 sm:py-10">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-5 sm:mb-6">{title}</h1>
+        <div className="flex items-center justify-between gap-3 mb-5 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">{title}</h1>
+          {action}
+        </div>
         {children}
       </div>
 
+      <footer className="container mx-auto px-4 pb-6 text-center text-xs text-gray-400">
+        <span className="font-semibold text-gray-500">CloudNet Field App</span> &middot; a product of CloudNet Software Co., Ltd.
+      </footer>
+
       {/* Mobile bottom tab bar — app-style navigation */}
-      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-40 bg-gray-900 border-t border-gray-800 flex w-full overflow-x-hidden">
+      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 inset-x-0 z-40 bg-gray-900 border-t border-gray-800 flex w-full overflow-x-auto">
         {navItems.map((item) => {
           const active = isActive(item)
           return (
             <Link
               key={item.to}
               to={item.to}
-              className={`flex-1 min-w-0 basis-0 flex flex-col items-center justify-center gap-1 py-2 px-1 text-[10px] leading-tight transition-colors ${
+              data-active={active}
+              className={`flex-1 min-w-[4.25rem] flex flex-col items-center justify-center gap-1 py-2 px-1 text-[10px] leading-tight transition-colors ${
                 active ? 'text-primary' : 'text-gray-400'
               }`}
             >

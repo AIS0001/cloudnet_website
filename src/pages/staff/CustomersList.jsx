@@ -1,10 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Search, Phone, Mail, Building2, MessageCircle, FileText, FileSpreadsheet } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Search, Phone, Mail, Building2, MessageCircle, FileText, FileSpreadsheet, Briefcase, Pencil, PhoneCall, Trash2, UserPlus } from 'lucide-react'
 import StaffLayout from '../../components/staff/StaffLayout'
 import DateRangeFilter from '../../components/staff/DateRangeFilter'
+import EditCustomerModal from '../../components/staff/EditCustomerModal'
 import { apiFetch } from '../../lib/apiClient'
 import { exportCustomersToExcel, exportCustomersToPdf } from '../../utils/customerExport'
 import { useStaffAuth } from '../../context/StaffAuthContext'
+
+// wa.me opens WhatsApp Web in a new tab, or the desktop/mobile app if installed.
+const waLink = (num) => `https://wa.me/${String(num).replace(/\D/g, '')}`
+
+const WhatsAppLink = ({ number, children }) => number ? (
+  <a
+    href={waLink(number)} target="_blank" rel="noopener noreferrer"
+    className="text-green-600 hover:text-green-700 hover:underline font-medium"
+    title="Chat on WhatsApp"
+  >
+    {children || number}
+  </a>
+) : '-'
 
 const MAX_EXPORT_PAGES = 40 // safety cap: up to 4000 customers (pageSize 100)
 
@@ -43,6 +58,7 @@ const CustomersList = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [exporting, setExporting] = useState(null)
+  const [editing, setEditing] = useState(null)
 
   const load = async (filters) => {
     setLoading(true)
@@ -60,6 +76,17 @@ const CustomersList = () => {
   }
 
   useEffect(() => { load({ search, from: dateFrom, to: dateTo }) }, [search, dateFrom, dateTo])
+
+  const handleDelete = async (c) => {
+    if (!window.confirm(`Delete customer "${c.name}"? This also removes their follow-up history and cannot be undone.`)) return
+    setError('')
+    try {
+      await apiFetch(`/customers/${c.id}`, { method: 'DELETE', auth: true })
+      setCustomers((list) => list.filter((x) => x.id !== c.id))
+    } catch (err) {
+      setError(err.message || 'Failed to delete customer.')
+    }
+  }
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -97,7 +124,14 @@ const CustomersList = () => {
   }
 
   return (
-    <StaffLayout title={isAdmin ? 'Customers' : 'My Customers'}>
+    <StaffLayout
+      title={isAdmin ? 'Customers' : 'My Customers'}
+      action={
+        <Link to="/staff/customers/new" className="btn-primary inline-flex items-center gap-2 !py-2 !px-4 text-sm">
+          <UserPlus size={16} /> Add Customer
+        </Link>
+      }
+    >
       <div className="flex flex-col gap-3 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <form onSubmit={handleSearch} className="flex gap-2 max-w-md flex-1">
@@ -156,16 +190,28 @@ const CustomersList = () => {
                 </div>
                 <div className="space-y-1 text-sm text-gray-600">
                   {c.companyName && <p className="flex items-center gap-2"><Building2 size={14} className="text-gray-400" /> {c.companyName}</p>}
-                  {c.phone && <p className="flex items-center gap-2"><Phone size={14} className="text-gray-400" /> {c.phone}</p>}
+                  {c.phone && <p className="flex items-center gap-2"><Phone size={14} className="text-gray-400" /> <WhatsAppLink number={c.phone} /></p>}
                   {c.email && <p className="flex items-center gap-2"><Mail size={14} className="text-gray-400" /> {c.email}</p>}
-                  {(c.lineId || c.whatsapp) && (
-                    <p className="flex items-center gap-2">
-                      <MessageCircle size={14} className="text-gray-400" />
-                      {[c.lineId && `Line: ${c.lineId}`, c.whatsapp && `WhatsApp: ${c.whatsapp}`].filter(Boolean).join(' · ')}
-                    </p>
+                  {c.lineId && <p className="flex items-center gap-2"><MessageCircle size={14} className="text-gray-400" /> Line: {c.lineId}</p>}
+                  {c.whatsapp && <p className="flex items-center gap-2"><MessageCircle size={14} className="text-green-500" /> WhatsApp: <WhatsAppLink number={c.whatsapp} /></p>}
+                  {(c.businessType || c.softwareInterested) && (
+                    <p className="flex items-center gap-2"><Briefcase size={14} className="text-gray-400" /> {[c.businessType, c.softwareInterested].filter(Boolean).join(' · ')}</p>
                   )}
                 </div>
-                <p className="text-xs text-gray-400 mt-2">Collected by {c.collectedBy}</p>
+                <div className="flex items-center justify-between mt-2">
+                  <p className="text-xs text-gray-400">Collected by {c.collectedBy}</p>
+                  <div className="flex items-center gap-4">
+                    <Link to={`/staff/follow-ups?customer=${c.id}`} className="inline-flex items-center gap-1 text-sm text-primary font-semibold">
+                      <PhoneCall size={14} /> Follow up
+                    </Link>
+                    <button type="button" onClick={() => setEditing(c)} className="inline-flex items-center gap-1 text-sm text-primary font-semibold">
+                      <Pencil size={14} /> Edit
+                    </button>
+                    <button type="button" onClick={() => handleDelete(c)} className="inline-flex items-center gap-1 text-sm text-red-600 font-semibold">
+                      <Trash2 size={14} /> Delete
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -181,8 +227,11 @@ const CustomersList = () => {
                   <th className="px-4 py-3">Email</th>
                   <th className="px-4 py-3">Line ID</th>
                   <th className="px-4 py-3">WhatsApp</th>
+                  <th className="px-4 py-3">Business Type</th>
+                  <th className="px-4 py-3">Software Interested</th>
                   <th className="px-4 py-3">Collected By</th>
                   <th className="px-4 py-3">Date</th>
+                  <th className="px-4 py-3"></th>
                 </tr>
               </thead>
               <tbody>
@@ -190,18 +239,38 @@ const CustomersList = () => {
                   <tr key={c.id} className="border-t border-gray-100">
                     <td className="px-4 py-3 font-medium">{c.name}</td>
                     <td className="px-4 py-3">{c.companyName || '-'}</td>
-                    <td className="px-4 py-3">{c.phone || '-'}</td>
+                    <td className="px-4 py-3"><WhatsAppLink number={c.phone} /></td>
                     <td className="px-4 py-3">{c.email || '-'}</td>
                     <td className="px-4 py-3">{c.lineId || '-'}</td>
-                    <td className="px-4 py-3">{c.whatsapp || '-'}</td>
+                    <td className="px-4 py-3"><WhatsAppLink number={c.whatsapp} /></td>
+                    <td className="px-4 py-3">{c.businessType || '-'}</td>
+                    <td className="px-4 py-3">{c.softwareInterested || '-'}</td>
                     <td className="px-4 py-3">{c.collectedBy}</td>
                     <td className="px-4 py-3 whitespace-nowrap">{new Date(c.createdAt).toLocaleDateString()}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <Link to={`/staff/follow-ups?customer=${c.id}`} className="inline-flex items-center gap-1 text-xs font-semibold bg-primary text-white px-3 py-1.5 rounded-lg mr-2 align-middle hover:bg-primary-600">
+                        <PhoneCall size={14} /> Follow up
+                      </Link>
+                      <button type="button" onClick={() => setEditing(c)} title="Edit customer" aria-label="Edit customer" className="text-gray-500 hover:text-primary align-middle">
+                        <Pencil size={16} />
+                      </button>
+                      <button type="button" onClick={() => handleDelete(c)} title="Delete customer" aria-label="Delete customer" className="text-gray-500 hover:text-red-600 align-middle ml-3">
+                        <Trash2 size={16} />
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </>
+      )}
+      {editing && (
+        <EditCustomerModal
+          customer={editing}
+          onClose={() => setEditing(null)}
+          onSaved={() => { setEditing(null); load({ search, from: dateFrom, to: dateTo }) }}
+        />
       )}
     </StaffLayout>
   )

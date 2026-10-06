@@ -8,6 +8,8 @@ const COLUMNS = [
   { key: 'email', label: 'Email' },
   { key: 'lineId', label: 'Line ID' },
   { key: 'whatsapp', label: 'WhatsApp' },
+  { key: 'businessType', label: 'Business Type' },
+  { key: 'softwareInterested', label: 'Software Interested' },
   { key: 'collectedBy', label: 'Collected By' },
   { key: 'createdAt', label: 'Date' }
 ]

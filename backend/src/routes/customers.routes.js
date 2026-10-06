@@ -13,6 +13,8 @@ function validateCustomer(data) {
   const email = String(data?.email || '').trim()
   const lineId = String(data?.lineId || '').trim()
   const whatsapp = String(data?.whatsapp || '').trim()
+  const businessType = String(data?.businessType || '').trim()
+  const softwareInterested = String(data?.softwareInterested || '').trim()
   const notes = String(data?.notes || '').trim()
 
   const errors = []
@@ -22,9 +24,11 @@ function validateCustomer(data) {
   if (email && (!/^\S+@\S+\.\S+$/.test(email) || email.length > 200)) errors.push('Email address looks invalid.')
   if (lineId.length > 100) errors.push('Line ID is too long.')
   if (whatsapp.length > 40) errors.push('WhatsApp number is too long.')
+  if (businessType.length > 100) errors.push('Business type is too long.')
+  if (softwareInterested.length > 100) errors.push('Software interested is too long.')
   if (notes.length > 2000) errors.push('Notes are too long.')
 
-  return { errors, value: { name, companyName, phone, email, lineId, whatsapp, notes } }
+  return { errors, value: { name, companyName, phone, email, lineId, whatsapp, businessType, softwareInterested, notes } }
 }
 
 router.post('/', async (req, res, next) => {
@@ -35,9 +39,9 @@ router.post('/', async (req, res, next) => {
     }
 
     const [result] = await pool.query(
-      `INSERT INTO customers (name, company_name, phone, email, line_id, whatsapp, notes, collected_by)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [value.name, value.companyName || null, value.phone, value.email || null, value.lineId || null, value.whatsapp || null, value.notes || null, req.staff.id]
+      `INSERT INTO customers (name, company_name, phone, email, line_id, whatsapp, business_type, software_interested, notes, collected_by)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [value.name, value.companyName || null, value.phone, value.email || null, value.lineId || null, value.whatsapp || null, value.businessType || null, value.softwareInterested || null, value.notes || null, req.staff.id]
     )
 
     res.status(201).json({ success: true, customerId: result.insertId })
@@ -71,7 +75,7 @@ router.get('/', async (req, res, next) => {
 
     const [rows] = await pool.query(
       `SELECT c.id, c.name, c.company_name AS companyName, c.phone, c.email, c.line_id AS lineId,
-              c.whatsapp, c.notes, c.created_at AS createdAt, s.full_name AS collectedBy
+              c.whatsapp, c.business_type AS businessType, c.software_interested AS softwareInterested, c.notes, c.created_at AS createdAt, s.full_name AS collectedBy
        FROM customers c
        JOIN staff s ON s.id = c.collected_by
        ${where}
@@ -91,11 +95,52 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    const { errors, value } = validateCustomer(req.body)
+    if (errors.length) {
+      return res.status(400).json({ success: false, error: errors.join(' ') })
+    }
+    const [existing] = await pool.query('SELECT collected_by FROM customers WHERE id = ?', [req.params.id])
+    if (!existing.length || (req.staff.role !== 'admin' && existing[0].collected_by !== req.staff.id)) {
+      return res.status(404).json({ success: false, error: 'Customer not found.' })
+    }
+
+    await pool.query(
+      `UPDATE customers SET name = ?, company_name = ?, phone = ?, email = ?, line_id = ?, whatsapp = ?,
+              business_type = ?, software_interested = ?, notes = ?
+       WHERE id = ?`,
+      [value.name, value.companyName || null, value.phone, value.email || null, value.lineId || null, value.whatsapp || null,
+       value.businessType || null, value.softwareInterested || null, value.notes || null, req.params.id]
+    )
+    res.json({ success: true })
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const [existing] = await pool.query('SELECT collected_by FROM customers WHERE id = ?', [req.params.id])
+    if (!existing.length || (req.staff.role !== 'admin' && existing[0].collected_by !== req.staff.id)) {
+      return res.status(404).json({ success: false, error: 'Customer not found.' })
+    }
+    const [[{ orderCount }]] = await pool.query('SELECT COUNT(*) AS orderCount FROM orders WHERE customer_id = ?', [req.params.id])
+    if (orderCount > 0) {
+      return res.status(409).json({ success: false, error: 'This customer has orders and cannot be deleted.' })
+    }
+    await pool.query('DELETE FROM customers WHERE id = ?', [req.params.id])
+    res.json({ success: true })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:id', async (req, res, next) => {
   try {
     const [rows] = await pool.query(
       `SELECT c.id, c.name, c.company_name AS companyName, c.phone, c.email, c.line_id AS lineId,
-              c.whatsapp, c.notes, c.created_at AS createdAt, c.collected_by AS collectedById, s.full_name AS collectedBy
+              c.whatsapp, c.business_type AS businessType, c.software_interested AS softwareInterested, c.notes, c.created_at AS createdAt, c.collected_by AS collectedById, s.full_name AS collectedBy
        FROM customers c
        JOIN staff s ON s.id = c.collected_by
        WHERE c.id = ?`,

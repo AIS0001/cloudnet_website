@@ -43,6 +43,8 @@ const StaffLogin = lazy(() => import('./pages/staff/StaffLogin'))
 const StaffDashboard = lazy(() => import('./pages/staff/StaffDashboard'))
 const CustomerForm = lazy(() => import('./pages/staff/CustomerForm'))
 const CustomersList = lazy(() => import('./pages/staff/CustomersList'))
+const FollowUps = lazy(() => import('./pages/staff/FollowUps'))
+const FollowUpReports = lazy(() => import('./pages/staff/FollowUpReports'))
 const PlaceOrder = lazy(() => import('./pages/staff/PlaceOrder'))
 const OrdersList = lazy(() => import('./pages/staff/OrdersList'))
 const TeamManagement = lazy(() => import('./pages/staff/TeamManagement'))
@@ -91,9 +93,11 @@ const AnimatedRoutes = () => {
         <Route path="/staff/login" element={page(<StaffLogin />)} />
         <Route path="/staff" element={page(<ProtectedStaffRoute><StaffDashboard /></ProtectedStaffRoute>)} />
         <Route path="/staff/customers/new" element={page(<ProtectedStaffRoute><CustomerForm /></ProtectedStaffRoute>)} />
+        <Route path="/staff/follow-ups" element={page(<ProtectedStaffRoute><FollowUps /></ProtectedStaffRoute>)} />
         <Route path="/staff/customers" element={page(<ProtectedStaffRoute><CustomersList /></ProtectedStaffRoute>)} />
         <Route path="/staff/orders/new" element={page(<ProtectedStaffRoute><PlaceOrder /></ProtectedStaffRoute>)} />
         <Route path="/staff/orders" element={page(<ProtectedStaffRoute><OrdersList /></ProtectedStaffRoute>)} />
+        <Route path="/staff/reports/follow-ups" element={page(<ProtectedStaffRoute adminOnly><FollowUpReports /></ProtectedStaffRoute>)} />
         <Route path="/staff/team" element={page(<ProtectedStaffRoute adminOnly><TeamManagement /></ProtectedStaffRoute>)} />
         <Route path="/staff/change-password" element={page(<ProtectedStaffRoute><ChangePassword /></ProtectedStaffRoute>)} />
       </Routes>

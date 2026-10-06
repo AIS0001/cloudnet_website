@@ -21,12 +21,29 @@ CREATE TABLE IF NOT EXISTS customers (
   email VARCHAR(200) DEFAULT NULL,
   line_id VARCHAR(100) DEFAULT NULL,
   whatsapp VARCHAR(40) DEFAULT NULL,
+  business_type VARCHAR(100) DEFAULT NULL,
+  software_interested VARCHAR(100) DEFAULT NULL,
+  lead_stage VARCHAR(30) NOT NULL DEFAULT 'new',
+  next_follow_up DATE DEFAULT NULL,
   notes TEXT DEFAULT NULL,
   collected_by INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_customers_staff FOREIGN KEY (collected_by) REFERENCES staff(id),
   INDEX idx_customers_phone (phone),
   INDEX idx_customers_email (email)
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS follow_ups (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  staff_id INT NOT NULL,
+  stage VARCHAR(30) NOT NULL,
+  note TEXT NOT NULL,
+  next_follow_up DATE DEFAULT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_followups_customer FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE,
+  CONSTRAINT fk_followups_staff FOREIGN KEY (staff_id) REFERENCES staff(id),
+  INDEX idx_followups_customer (customer_id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS orders (

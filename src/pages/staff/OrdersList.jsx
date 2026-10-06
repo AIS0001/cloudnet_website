@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { FileText, FileSpreadsheet } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { FileText, FileSpreadsheet, ShoppingCart } from 'lucide-react'
 import StaffLayout from '../../components/staff/StaffLayout'
 import DateRangeFilter from '../../components/staff/DateRangeFilter'
 import { apiFetch } from '../../lib/apiClient'
@@ -86,7 +87,14 @@ const OrdersList = () => {
   }
 
   return (
-    <StaffLayout title={isAdmin ? 'Orders' : 'My Orders'}>
+    <StaffLayout
+      title={isAdmin ? 'Orders' : 'My Orders'}
+      action={
+        <Link to="/staff/orders/new" className="btn-primary inline-flex items-center gap-2 !py-2 !px-4 text-sm">
+          <ShoppingCart size={16} /> New Order
+        </Link>
+      }
+    >
       <div className="flex flex-col gap-3 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <DateRangeFilter from={dateFrom} to={dateTo} onChange={handleDateChange} />
