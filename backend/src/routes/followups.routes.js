@@ -29,6 +29,8 @@ router.get('/', async (req, res, next) => {
       params.push(...Array(3).fill(`%${search}%`))
     }
     const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : ''
+    const page = Math.max(1, Number(req.query.page) || 1)
+    const pageSize = Math.min(100, Math.max(1, Number(req.query.pageSize) || 25))
 
     const [rows] = await pool.query(
       `SELECT c.id, c.name, c.company_name AS companyName, c.phone, c.whatsapp,
@@ -39,10 +41,11 @@ router.get('/', async (req, res, next) => {
        FROM customers c
        ${where}
        ORDER BY (c.next_follow_up IS NULL), c.next_follow_up ASC, c.created_at DESC
-       LIMIT 200`,
-      params
+       LIMIT ? OFFSET ?`,
+      [...params, pageSize, (page - 1) * pageSize]
     )
-    res.json({ success: true, customers: rows, stages: STAGES })
+    const [[{ total }]] = await pool.query(`SELECT COUNT(*) AS total FROM customers c ${where}`, params)
+    res.json({ success: true, customers: rows, total, page, pageSize, stages: STAGES })
   } catch (err) {
     next(err)
   }

@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, Phone, Mail, Building2, MessageCircle, FileText, FileSpreadsheet, Briefcase, Pencil, PhoneCall, Trash2, UserPlus } from 'lucide-react'
 import StaffLayout from '../../components/staff/StaffLayout'
+import Pagination from '../../components/staff/Pagination'
 import DateRangeFilter from '../../components/staff/DateRangeFilter'
 import EditCustomerModal from '../../components/staff/EditCustomerModal'
 import { apiFetch } from '../../lib/apiClient'
 import { exportCustomersToExcel, exportCustomersToPdf } from '../../utils/customerExport'
+import { SOFTWARE_OPTIONS } from '../../constants/customerOptions'
 import { useStaffAuth } from '../../context/StaffAuthContext'
 
 // wa.me opens WhatsApp Web in a new tab, or the desktop/mobile app if installed.
@@ -21,11 +23,13 @@ const WhatsAppLink = ({ number, children }) => number ? (
   </a>
 ) : '-'
 
+const PAGE_SIZE = 25
 const MAX_EXPORT_PAGES = 40 // safety cap: up to 4000 customers (pageSize 100)
 
-function buildQuery({ search, from, to }) {
+function buildQuery({ search, from, to, software }) {
   const params = new URLSearchParams()
   if (search) params.set('search', search)
+  if (software) params.set('software', software)
   if (from) params.set('from', from)
   if (to) params.set('to', to)
   return params
@@ -55,19 +59,25 @@ const CustomersList = () => {
   const [searchInput, setSearchInput] = useState('')
   const [dateFrom, setDateFrom] = useState('')
   const [dateTo, setDateTo] = useState('')
+  const [software, setSoftware] = useState('')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [exporting, setExporting] = useState(null)
   const [editing, setEditing] = useState(null)
 
-  const load = async (filters) => {
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
+
+  const load = async (filters, pageNo = page) => {
     setLoading(true)
     setError('')
     try {
       const params = buildQuery(filters)
-      const qs = params.toString()
-      const result = await apiFetch(`/customers${qs ? `?${qs}` : ''}`, { auth: true })
+      params.set('page', String(pageNo))
+      params.set('pageSize', String(PAGE_SIZE))
+      const result = await apiFetch(`/customers?${params.toString()}`, { auth: true })
       setCustomers(result.customers)
+      setTotal(result.total)
     } catch (err) {
       setError(err.message || 'Failed to load customers.')
     } finally {
@@ -75,14 +85,16 @@ const CustomersList = () => {
     }
   }
 
-  useEffect(() => { load({ search, from: dateFrom, to: dateTo }) }, [search, dateFrom, dateTo])
+  useEffect(() => { load({ search, from: dateFrom, to: dateTo, software }, page) }, [search, dateFrom, dateTo, software, page])
 
   const handleDelete = async (c) => {
     if (!window.confirm(`Delete customer "${c.name}"? This also removes their follow-up history and cannot be undone.`)) return
     setError('')
     try {
       await apiFetch(`/customers/${c.id}`, { method: 'DELETE', auth: true })
-      setCustomers((list) => list.filter((x) => x.id !== c.id))
+      // Step back a page if that was the last row on a later page; otherwise reload in place.
+      if (customers.length === 1 && page > 1) setPage(page - 1)
+      else load({ search, from: dateFrom, to: dateTo, software }, page)
     } catch (err) {
       setError(err.message || 'Failed to delete customer.')
     }
@@ -90,10 +102,12 @@ const CustomersList = () => {
 
   const handleSearch = (e) => {
     e.preventDefault()
+    setPage(1)
     setSearch(searchInput)
   }
 
   const handleDateChange = ({ from, to }) => {
+    setPage(1)
     setDateFrom(from)
     setDateTo(to)
   }
@@ -102,7 +116,7 @@ const CustomersList = () => {
     setExporting(format)
     setError('')
     try {
-      const filters = { search, from: dateFrom, to: dateTo }
+      const filters = { search, from: dateFrom, to: dateTo, software }
       const all = await fetchAllCustomers(filters)
       if (!all.length) {
         setError('No customers to export.')
@@ -110,6 +124,7 @@ const CustomersList = () => {
       }
       const parts = []
       if (search) parts.push(`search "${search}"`)
+      if (software) parts.push(`software "${software}"`)
       if (dateFrom || dateTo) parts.push(`${dateFrom || 'earliest'} to ${dateTo || 'today'}`)
       if (format === 'pdf') {
         exportCustomersToPdf(all, { subtitle: parts.length ? `Filtered by ${parts.join(', ')}` : undefined })
@@ -169,7 +184,18 @@ const CustomersList = () => {
           </div>
         </div>
 
-        <DateRangeFilter from={dateFrom} to={dateTo} onChange={handleDateChange} />
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <select
+            value={software}
+            onChange={(e) => { setPage(1); setSoftware(e.target.value) }}
+            aria-label="Filter by software interested"
+            className="px-4 py-2.5 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none bg-white sm:w-56"
+          >
+            <option value="">All software</option>
+            {SOFTWARE_OPTIONS.map((o) => <option key={o} value={o}>{o}</option>)}
+          </select>
+          <DateRangeFilter from={dateFrom} to={dateTo} onChange={handleDateChange} />
+        </div>
       </div>
 
       {error && <div className="bg-red-50 border-2 border-red-500 rounded-xl p-4 mb-6 text-red-700 text-sm">{error}</div>}
@@ -182,10 +208,10 @@ const CustomersList = () => {
         <>
           {/* Mobile: card list */}
           <div className="space-y-3 md:hidden">
-            {customers.map((c) => (
+            {customers.map((c, i) => (
               <div key={c.id} className="bg-white rounded-xl shadow border-2 border-gray-100 p-4">
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <p className="font-semibold">{c.name}</p>
+                  <p className="font-semibold"><span className="text-gray-400 font-normal mr-1">{(page - 1) * PAGE_SIZE + i + 1}.</span>{c.name}</p>
                   <span className="text-xs text-gray-400 whitespace-nowrap">{new Date(c.createdAt).toLocaleDateString()}</span>
                 </div>
                 <div className="space-y-1 text-sm text-gray-600">
@@ -221,6 +247,7 @@ const CustomersList = () => {
             <table className="w-full text-sm">
               <thead className="bg-gray-50 text-left text-gray-600">
                 <tr>
+                  <th className="px-4 py-3">S.No</th>
                   <th className="px-4 py-3">Name</th>
                   <th className="px-4 py-3">Company</th>
                   <th className="px-4 py-3">Phone</th>
@@ -231,12 +258,13 @@ const CustomersList = () => {
                   <th className="px-4 py-3">Software Interested</th>
                   <th className="px-4 py-3">Collected By</th>
                   <th className="px-4 py-3">Date</th>
-                  <th className="px-4 py-3"></th>
+                  <th className="px-4 py-3 sticky right-0 bg-gray-50 shadow-[-6px_0_6px_-6px_rgba(0,0,0,0.15)]"></th>
                 </tr>
               </thead>
               <tbody>
-                {customers.map((c) => (
+                {customers.map((c, i) => (
                   <tr key={c.id} className="border-t border-gray-100">
+                    <td className="px-4 py-3 text-gray-500">{(page - 1) * PAGE_SIZE + i + 1}</td>
                     <td className="px-4 py-3 font-medium">{c.name}</td>
                     <td className="px-4 py-3">{c.companyName || '-'}</td>
                     <td className="px-4 py-3"><WhatsAppLink number={c.phone} /></td>
@@ -247,7 +275,7 @@ const CustomersList = () => {
                     <td className="px-4 py-3">{c.softwareInterested || '-'}</td>
                     <td className="px-4 py-3">{c.collectedBy}</td>
                     <td className="px-4 py-3 whitespace-nowrap">{new Date(c.createdAt).toLocaleDateString()}</td>
-                    <td className="px-4 py-3 whitespace-nowrap">
+                    <td className="px-4 py-3 whitespace-nowrap sticky right-0 bg-white shadow-[-6px_0_6px_-6px_rgba(0,0,0,0.15)]">
                       <Link to={`/staff/follow-ups?customer=${c.id}`} className="inline-flex items-center gap-1 text-xs font-semibold bg-primary text-white px-3 py-1.5 rounded-lg mr-2 align-middle hover:bg-primary-600">
                         <PhoneCall size={14} /> Follow up
                       </Link>
@@ -263,13 +291,14 @@ const CustomersList = () => {
               </tbody>
             </table>
           </div>
+          <Pagination page={page} pageSize={PAGE_SIZE} total={total} onChange={setPage} />
         </>
       )}
       {editing && (
         <EditCustomerModal
           customer={editing}
           onClose={() => setEditing(null)}
-          onSaved={() => { setEditing(null); load({ search, from: dateFrom, to: dateTo }) }}
+          onSaved={() => { setEditing(null); load({ search, from: dateFrom, to: dateTo, software }, page) }}
         />
       )}
     </StaffLayout>

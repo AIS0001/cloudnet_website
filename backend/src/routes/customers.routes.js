@@ -64,6 +64,11 @@ router.get('/', async (req, res, next) => {
       conditions.push('(c.name LIKE ? OR c.company_name LIKE ? OR c.phone LIKE ? OR c.email LIKE ?)')
       params.push(...Array(4).fill(`%${search}%`))
     }
+    const software = String(req.query.software || '').trim()
+    if (software) {
+      conditions.push('c.software_interested = ?')
+      params.push(software)
+    }
     if (ownOnly) {
       conditions.push('c.collected_by = ?')
       params.push(req.staff.id)

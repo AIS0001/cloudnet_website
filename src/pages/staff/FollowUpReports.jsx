@@ -2,13 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 import { Search, FileText, FileSpreadsheet } from 'lucide-react'
 import StaffLayout from '../../components/staff/StaffLayout'
 import DateRangeFilter from '../../components/staff/DateRangeFilter'
+import Pagination from '../../components/staff/Pagination'
 import { apiFetch } from '../../lib/apiClient'
 import {
   GROUP_OPTIONS, buildSummary, periodLabel, exportFollowUpsToExcel, exportFollowUpsToPdf
 } from '../../utils/followUpReport'
 
 const STAGES = ['new', 'contacted', 'interested', 'demo', 'negotiation', 'won', 'lost']
-const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1)
+const PAGE_SIZE = 25
+const cap =(s) => s.charAt(0).toUpperCase() + s.slice(1)
 const fmt = (d) => d.toLocaleDateString('en-CA')
 
 function presetRange(preset) {
@@ -86,6 +88,7 @@ const FollowUpReports = () => {
   const [truncated, setTruncated] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     apiFetch('/staff', { auth: true }).then((r) => setStaffList(r.staff || [])).catch(() => {})
@@ -106,6 +109,7 @@ const FollowUpReports = () => {
         const r = await apiFetch(`/follow-ups/report?${params.toString()}`, { auth: true })
         if (cancelled) return
         setRows(r.followUps || [])
+        setPage(1)
         setTruncated(Boolean(r.truncated))
       } catch (err) {
         if (cancelled) return
@@ -264,7 +268,7 @@ const FollowUpReports = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map((r) => (
+                    {rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map((r) => (
                       <tr key={r.id} className="border-t border-white/70 align-top">
                         <td className="px-4 py-2 whitespace-nowrap">{String(r.createdAt).slice(0, 16)}</td>
                         <td className="px-4 py-2 whitespace-nowrap">{r.staffName}</td>
@@ -283,6 +287,7 @@ const FollowUpReports = () => {
               </div>
             )}
           </div>
+          <Pagination page={page} pageSize={PAGE_SIZE} total={rows.length} onChange={setPage} />
         </>
       )}
     </StaffLayout>

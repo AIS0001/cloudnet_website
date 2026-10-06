@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, X, Save, MessageCircle } from 'lucide-react'
 import StaffLayout from '../../components/staff/StaffLayout'
+import Pagination from '../../components/staff/Pagination'
 import { apiFetch } from '../../lib/apiClient'
+
+const PAGE_SIZE = 25
 
 const STAGES = ['new', 'contacted', 'interested', 'demo', 'negotiation', 'won', 'lost']
 const STAGE_STYLE = {
@@ -127,6 +130,8 @@ const FollowUps = () => {
   const [selected, setSelected] = useState(null)
   const [params, setParams] = useSearchParams()
   const wantedId = params.get('customer')
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
 
   const load = async () => {
     setLoading(true)
@@ -136,9 +141,18 @@ const FollowUps = () => {
       if (search) params.set('search', search)
       if (stage) params.set('stage', stage)
       if (dueOnly) params.set('due', '1')
-      const qs = params.toString()
-      const r = await apiFetch(`/follow-ups${qs ? `?${qs}` : ''}`, { auth: true })
-      setCustomers(r.customers || [])
+      params.set('page', String(page))
+      params.set('pageSize', String(PAGE_SIZE))
+      const r = await apiFetch(`/follow-ups?${params.toString()}`, { auth: true })
+      const list = r.customers || []
+      if (r.total == null) {
+        // Older backend without server-side paging: it returns everything, so page it here.
+        setTotal(list.length)
+        setCustomers(list.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE))
+      } else {
+        setTotal(r.total)
+        setCustomers(list)
+      }
       if (wantedId) {
         const match = r.customers.find((x) => String(x.id) === wantedId)
         if (match) setSelected(match)
@@ -151,26 +165,26 @@ const FollowUps = () => {
       setLoading(false)
     }
   }
-  useEffect(() => { load() }, [search, stage, dueOnly])
+  useEffect(() => { load() }, [search, stage, dueOnly, page])
 
   const isDue = (c) => c.nextFollowUp && c.nextFollowUp <= today()
 
   return (
     <StaffLayout title="Follow Ups">
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
-        <form onSubmit={(e) => { e.preventDefault(); setSearch(searchInput) }} className="flex gap-2 max-w-md flex-1">
+        <form onSubmit={(e) => { e.preventDefault(); setPage(1); setSearch(searchInput) }} className="flex gap-2 max-w-md flex-1">
           <input
             type="text" value={searchInput} onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search name, company, phone..." className={`${inputClass} flex-1`}
           />
           <button type="submit" className="bg-primary hover:bg-primary-600 text-white px-4 rounded-lg"><Search size={18} /></button>
         </form>
-        <select value={stage} onChange={(e) => setStage(e.target.value)} className={`${inputClass} sm:w-48`}>
+        <select value={stage} onChange={(e) => { setPage(1); setStage(e.target.value) }} className={`${inputClass} sm:w-48`}>
           <option value="">All stages</option>
           {STAGES.map((s) => <option key={s} value={s}>{label(s)}</option>)}
         </select>
         <label className="inline-flex items-center gap-2 text-sm text-gray-700">
-          <input type="checkbox" checked={dueOnly} onChange={(e) => setDueOnly(e.target.checked)} /> Due / overdue only
+          <input type="checkbox" checked={dueOnly} onChange={(e) => { setPage(1); setDueOnly(e.target.checked) }} /> Due / overdue only
         </label>
       </div>
 
@@ -213,6 +227,7 @@ const FollowUps = () => {
           ))}
         </div>
       )}
+      {!loading && !error && <Pagination page={page} pageSize={PAGE_SIZE} total={total} onChange={setPage} />}
 
       {selected && <FollowUpPanel customer={selected} onClose={() => setSelected(null)} onSaved={load} />}
     </StaffLayout>

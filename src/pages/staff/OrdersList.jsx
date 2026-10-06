@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import { FileText, FileSpreadsheet, ShoppingCart } from 'lucide-react'
 import StaffLayout from '../../components/staff/StaffLayout'
 import DateRangeFilter from '../../components/staff/DateRangeFilter'
+import Pagination from '../../components/staff/Pagination'
 import { apiFetch } from '../../lib/apiClient'
 import { useStaffAuth } from '../../context/StaffAuthContext'
 import { exportOrdersToExcel, exportOrdersToPdf } from '../../utils/orderExport'
 
+const PAGE_SIZE = 25
 const MAX_EXPORT_PAGES = 40 // safety cap: up to 4000 orders (pageSize 100)
 
 const statusColors = {
@@ -47,18 +49,23 @@ const OrdersList = () => {
   const [error, setError] = useState('')
   const [exporting, setExporting] = useState(null)
 
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
+
   useEffect(() => {
     setLoading(true)
     setError('')
     const params = buildQuery({ from: dateFrom, to: dateTo })
-    const qs = params.toString()
-    apiFetch(`/orders${qs ? `?${qs}` : ''}`, { auth: true })
-      .then((result) => setOrders(result.orders))
+    params.set('page', String(page))
+    params.set('pageSize', String(PAGE_SIZE))
+    apiFetch(`/orders?${params.toString()}`, { auth: true })
+      .then((result) => { setOrders(result.orders); setTotal(result.total) })
       .catch((err) => setError(err.message || 'Failed to load orders.'))
       .finally(() => setLoading(false))
-  }, [dateFrom, dateTo])
+  }, [dateFrom, dateTo, page])
 
   const handleDateChange = ({ from, to }) => {
+    setPage(1)
     setDateFrom(from)
     setDateTo(to)
   }
@@ -129,11 +136,11 @@ const OrdersList = () => {
         <p className="text-gray-500">No orders found.</p>
       ) : (
         <div className="space-y-4">
-          {orders.map((order) => (
+          {orders.map((order, i) => (
             <div key={order.id} className="bg-white rounded-xl shadow border-2 border-gray-100 p-5">
               <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
                 <div>
-                  <p className="font-semibold">{order.customerName} {order.companyName ? `· ${order.companyName}` : ''}</p>
+                  <p className="font-semibold"><span className="text-gray-400 font-normal mr-1">{(page - 1) * PAGE_SIZE + i + 1}.</span>{order.customerName} {order.companyName ? `· ${order.companyName}` : ''}</p>
                   <p className="text-sm text-gray-500">{order.phone} {order.email ? `· ${order.email}` : ''}</p>
                 </div>
                 <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColors[order.status] || 'bg-gray-100 text-gray-700'}`}>
@@ -153,6 +160,7 @@ const OrdersList = () => {
               </p>
             </div>
           ))}
+          <Pagination page={page} pageSize={PAGE_SIZE} total={total} onChange={setPage} />
         </div>
       )}
     </StaffLayout>
